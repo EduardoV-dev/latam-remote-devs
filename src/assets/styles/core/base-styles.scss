@@ -1,0 +1,21 @@
+@use '../abstracts/functions' as fns;
+@use '../abstracts/mixins' as mi;
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    @include mi.apply-font('primary');
+
+    background-color: fns.bg-color('white');
+    font-size: 16px;
+}
+
+:is(h1, h2, h3, h4, h5, h6) {
+    @include mi.apply-font('secondary', 600);
+}

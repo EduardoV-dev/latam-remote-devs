@@ -1,0 +1,21 @@
+@use './variables' as vars;
+
+/* Gets color from the main colors */
+@function main-color($color-name) {
+    @return map-get(vars.$colors-palette, 'main', $color-name);
+}
+
+/* Gets color from the bg colors */
+@function bg-color($color-name) {
+    @return map-get(vars.$colors-palette, 'bg', $color-name);
+}
+
+/* Gets color from the text colors */
+@function text-color($color-name) {
+    @return map-get(vars.$colors-palette, 'text', $color-name);
+}
+
+/* Gets breakpoint by its name  */
+@function breakpoint($breakpoint-name) {
+    @return map-get(vars.$breakpoints, $breakpoint-name);
+}

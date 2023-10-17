@@ -1,0 +1,19 @@
+@use './functions' as fns;
+@use './variables' as vars;
+
+/* Media query mixin for handling responsive in a easier way. Mobile First Approach */
+@mixin media($breakpoint-name) {
+    @media screen and (min-width: fns.breakpoint($breakpoint-name)) {
+        @content;
+    }
+}
+
+/* Applies font with its font-weight, font-name value could be 'primary' or 'secondary' */
+@mixin apply-font($font-name, $font-weight: 400) {
+    // font-family: map-get($map: vars.$fonts, $key: $font-name), 'Segoe UI',
+    //     Tahoma, Geneva, Verdana, sans-serif;
+
+    font-family: map-get($map: vars.$fonts, $key: $font-name);
+
+    font-weight: $font-weight;
+}
