@@ -19,3 +19,20 @@ a {
     display: block;
     color: fns.main-color('secondary');
 }
+
+.group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.skill-badge {
+    display: block;
+
+    background-color: fns.bg-color('white');
+    border-radius: 5px;
+    border: 1px solid fns.main-color('primary');
+    padding: 0.5rem 1.5rem;
+    cursor: default;
+}

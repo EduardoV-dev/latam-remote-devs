@@ -1,0 +1,39 @@
+@use '/src/assets/styles/abstracts/functions' as fn;
+
+.list {
+    display: grid;
+    gap: 1rem;
+}
+
+.item {
+    display: grid;
+    gap: 0.6rem;
+
+    border: 1px solid fn.main-color('primary');
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    cursor: default;
+    transition: all 0.2s ease;
+
+    &:is(:hover, :focus) {
+        background-color: fn.bg-color('white-darkened');
+    }
+
+    &__title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: -0.3rem;
+    }
+
+    &__range {
+        background-color: rgba(fn.main-color('primary'), 0.4);
+        width: fit-content;
+        padding: 0.2rem 1rem;
+        border-radius: 5px;
+    }
+
+    &__published {
+        margin-top: 1rem;
+        font-size: 12px;
+    }
+}

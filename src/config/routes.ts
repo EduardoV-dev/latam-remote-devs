@@ -1,6 +1,6 @@
 export const APP_ROUTES = {
     PUBLIC: {
-        HOMEPAGE: '/',
+        JOBS: '/jobs',
         DEVELOPER: {
             LOGIN: '/dev/login',
             REGISTER: '/dev/registration',

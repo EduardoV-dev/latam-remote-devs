@@ -1,0 +1,67 @@
+@use '/src/assets/styles/abstracts/functions' as fn;
+
+.container {
+    position: sticky;
+    top: 20px;
+    align-self: flex-start;
+
+    border: 1px solid fn.main-color('primary');
+    border-radius: 10px;
+    height: 95vh;
+
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+.header {
+    padding: 1rem 0.5rem;
+    border-bottom: 1px solid rgba(fn.text-color('muted'), 0.2);
+    box-shadow: 0 1px 4px rgba(fn.main-color('primary'), 0.2);
+
+    &__exit {
+        display: block;
+        margin-left: auto;
+        padding: 0;
+    }
+
+    .group {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem;
+
+        padding: 0.5rem 1rem;
+
+        .data {
+            p {
+                font-weight: 600;
+                font-size: 18px;
+            }
+
+            span {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+
+                margin-top: 1rem;
+            }
+        }
+    }
+}
+
+.body {
+    overflow-y: auto;
+    padding: 2.5rem 1.5rem;
+
+    .headline {
+        margin-block: 2.5rem 1.5rem;
+
+        &:first-of-type {
+            margin-top: 0;
+        }
+
+        font-size: 18px;
+        font-weight: 600;
+        color: fn.main-color('primary');
+    }
+}

@@ -1,0 +1,36 @@
+@use '/src/assets/styles/abstracts/functions' as fn;
+
+.container {
+    width: min(100%, 500px);
+    margin-inline: auto;
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+
+    background-color: fn.bg-color('white-darkened');
+    border-radius: 10px;
+    border: 2px solid fn.main-color('primary');
+    padding: 0.5rem;
+    padding-left: 1rem;
+
+    transition: all 0.2s ease;
+
+    &:focus-within {
+        box-shadow: 0 4px 0 0 fn.main-color('primary');
+    }
+
+    .wrapper {
+        display: flex;
+        align-items: center;
+
+        input {
+            border: none;
+            background-color: transparent;
+
+            :focus {
+                box-shadow: 0 0 0 0 #000;
+            }
+        }
+    }
+}
