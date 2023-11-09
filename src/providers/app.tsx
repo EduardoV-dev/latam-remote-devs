@@ -2,6 +2,7 @@ import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import { ConfigProvider } from 'antd';
 
 const ErrorFallback = (): JSX.Element => (
     <main>
@@ -21,7 +22,18 @@ export const AppProvider = ({
             pauseOnHover
             position="top-right"
         />
-        <Router>{children}</Router>
+        <ConfigProvider
+            theme={{
+                token: {
+                    colorPrimary: '#4b75c5',
+                    colorLink: '#53399d',
+                    colorBgLayout: '#fff',
+                    colorText: '#333',
+                },
+            }}
+        >
+            <Router>{children}</Router>
+        </ConfigProvider>
     </ErrorBoundary>
 );
 

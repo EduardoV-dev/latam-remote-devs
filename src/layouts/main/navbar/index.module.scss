@@ -1,0 +1,42 @@
+@use '/src/assets/styles/abstracts/functions' as fn;
+@use '/src/assets/styles/abstracts/mixins' as mi;
+
+.navbar {
+    @include mi.apply-wrapper('content');
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+
+    &__logo {
+        margin-top: 8px;
+    }
+
+    &__link {
+        line-height: 1.5;
+        font-weight: 500;
+
+        &.active {
+            position: relative;
+            font-weight: 600;
+
+            &::before {
+                content: '';
+                position: absolute;
+                bottom: -13px;
+                left: 0;
+
+                width: 101%;
+                height: 2px;
+                background-color: fn.main-color('secondary');
+            }
+        }
+    }
+
+    .group {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+    }
+}

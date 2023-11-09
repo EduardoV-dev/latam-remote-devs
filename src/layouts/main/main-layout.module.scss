@@ -1,0 +1,33 @@
+@use '/src/assets/styles/abstracts/functions' as fn;
+@use '/src/assets/styles/abstracts/mixins' as mi;
+
+.container {
+    min-height: 100vh;
+
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: 3rem;
+}
+
+.header {
+    background-color: fn.bg-color('white');
+    border-bottom: 1px solid rgba(fn.text-color('muted'), 0.2);
+}
+
+.content {
+    @include mi.apply-wrapper('content');
+    margin-block: 2rem;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+
+    background-color: fn.main-color('primary');
+    color: fn.text-color('white');
+    padding: 0.5rem 0;
+    font-size: 20px;
+    font-weight: 500;
+}
