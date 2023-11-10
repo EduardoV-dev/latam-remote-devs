@@ -4,22 +4,29 @@ import React from 'react';
 import SearchIcon from '../../assets/svg/search.svg?react';
 
 import styles from './index.module.scss';
+import { APP_ROUTES } from '@/config/routes';
+import { useNavigate } from 'react-router-dom';
 import { useFeedStore } from '../../stores/feed';
 
 export const JobsSearchInput = (): JSX.Element => {
-    const setSearchInStore = useFeedStore((state) => state.setSearch);
-    const [search, setSearch] = React.useState<string>('');
+    const navigate = useNavigate();
+    const feedStore = useFeedStore();
+    const [search, setSearch] = React.useState<string>(feedStore.search);
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>): void =>
         setSearch(event.target.value);
 
-    const onSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        setSearchInStore(search);
+
+        feedStore.setSearch(search);
+        navigate(
+            `${APP_ROUTES.PUBLIC.JOBS}?search=${encodeURIComponent(search)}`,
+        );
     };
 
     return (
-        <form {...{ onSubmit }} className={styles.container}>
+        <form onSubmit={handleSubmit} className={styles.container}>
             <div className={styles.wrapper}>
                 <SearchIcon />
 

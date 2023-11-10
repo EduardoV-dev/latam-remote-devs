@@ -3,6 +3,7 @@
 
 .container {
     @include mi.apply-wrapper('medium');
+    margin-top: 3rem;
 
     .headline {
         font-size: 18px;

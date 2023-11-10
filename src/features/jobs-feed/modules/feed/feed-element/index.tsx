@@ -3,12 +3,11 @@ import { useFeedStore } from '@/features/jobs-feed/stores/feed';
 import CloseIcon from '@/assets/svg/close.svg?react';
 import LinkIcon from '@/assets/svg/link.svg?react';
 import styles from './index.module.scss';
+import { Link } from 'react-router-dom';
 
 export const FeedElement = (): JSX.Element => {
     const { jobId, setJobId } = useFeedStore();
-
     if (!jobId) return <></>;
-
     const hideFeedElement = (): void => setJobId(null);
 
     return (
@@ -24,7 +23,7 @@ export const FeedElement = (): JSX.Element => {
 
                 <div className={styles.group}>
                     <div className={styles.data}>
-                        <p>Senior React Developer</p>
+                        <Link to={jobId}>Senior React Developer</Link>
 
                         <span>
                             Nowoptics <LinkIcon />
