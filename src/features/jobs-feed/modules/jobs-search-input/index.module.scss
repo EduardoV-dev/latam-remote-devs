@@ -26,11 +26,8 @@
 
         input {
             border: none;
+            padding-block: 0;
             background-color: transparent;
-
-            :focus {
-                box-shadow: 0 0 0 0 #000;
-            }
         }
     }
 }

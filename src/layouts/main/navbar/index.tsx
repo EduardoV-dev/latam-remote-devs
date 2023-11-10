@@ -10,27 +10,24 @@ export const Navbar = (): JSX.Element => {
 
     return (
         <nav className={styles.navbar}>
-            <NavLink className={getLinkClasses} to={APP_ROUTES.PUBLIC.HOMEPAGE}>
+            <NavLink className={getLinkClasses} to={APP_ROUTES.PUBLIC.JOBS}>
                 Buscar Trabajos
             </NavLink>
 
-            <Link
-                className={styles.navbar__logo}
-                to={APP_ROUTES.PUBLIC.HOMEPAGE}
-            >
+            <Link className={styles.navbar__logo} to={APP_ROUTES.PUBLIC.JOBS}>
                 <img src={LogoImg} alt="LatamRemoteDevs" />
             </Link>
 
             <div className={styles.group}>
                 <NavLink
                     className={getLinkClasses}
-                    to={APP_ROUTES.PUBLIC.DEVELOPER.LOGIN}
+                    to={`${APP_ROUTES.PUBLIC.AUTH}/dev/login`}
                 >
                     Ingresar
                 </NavLink>
                 <NavLink
                     className={getLinkClasses}
-                    to={APP_ROUTES.PUBLIC.DEVELOPER.LOGIN}
+                    to={`${APP_ROUTES.PUBLIC.AUTH}/dev/registration`}
                 >
                     Registrarse
                 </NavLink>

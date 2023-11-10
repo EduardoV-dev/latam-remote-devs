@@ -16,8 +16,32 @@ body {
 }
 
 a {
-    display: block;
+    display: inline-block;
+    width: fit-content;
     color: fns.main-color('secondary');
+    font-weight: 600;
+}
+
+:is(input, .input) {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: 'Segoe UI';
+
+    padding: 0.5rem 0.8rem;
+    border-radius: 5px;
+    background-color: fns.bg-color('white');
+    border: 1px solid fns.main-color('primary');
+    transition: all 0.2s ease;
+
+    &:focus {
+        box-shadow: 0 4px 0 0 #4b75c5;
+    }
+}
+
+.center {
+    display: block;
+    margin-inline: auto;
 }
 
 .group {
@@ -35,4 +59,23 @@ a {
     border: 1px solid fns.main-color('primary');
     padding: 0.5rem 1.5rem;
     cursor: default;
+}
+
+.form-error {
+    color: fns.main-color('danger');
+    margin-top: 0.5rem;
+}
+
+/** Antd Overrides **/
+
+.ant-input {
+    &:focus {
+        box-shadow: 0 4px 0 0 fns.main-color('primary');
+    }
+
+    &.no-focus {
+        &:focus {
+            box-shadow: unset;
+        }
+    }
 }

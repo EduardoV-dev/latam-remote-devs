@@ -10,7 +10,7 @@
 
 /* Applies font with its font-weight, font-name value could be 'primary' or 'secondary' */
 @mixin apply-font($font-name, $font-weight: 400) {
-    font-family: map-get($map: vars.$fonts, $key: $font-name);
+    font-family: map-get($map: vars.$fonts, $key: $font-name), 'Segoe UI';
     font-weight: $font-weight;
 }
 

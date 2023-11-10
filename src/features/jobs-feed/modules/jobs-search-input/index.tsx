@@ -32,6 +32,7 @@ export const JobsSearchInput = (): JSX.Element => {
 
                 <Input
                     {...{ onChange }}
+                    className="no-focus"
                     placeholder="Busca por Título del Trabajo o Palabras Clave"
                     value={search}
                 />
