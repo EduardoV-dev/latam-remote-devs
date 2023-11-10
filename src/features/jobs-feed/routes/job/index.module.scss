@@ -1,0 +1,50 @@
+@use '/src/assets/styles/abstracts/mixins' as mi;
+@use '/src/assets/styles/abstracts/functions' as fn;
+
+.container {
+    @include mi.apply-wrapper('medium');
+
+    .headline {
+        font-size: 18px;
+        font-weight: 600;
+        color: fn.main-color('primary');
+
+        margin-bottom: 1.5rem;
+    }
+
+    .separator {
+        margin-block: 3rem;
+        display: block;
+
+        color: rgba(fn.main-color('primary'), 0.2);
+        box-shadow: 0 1px 4px rgba(fn.main-color('primary'), 0.2);
+    }
+}
+
+.header {
+    display: grid;
+    grid-template-columns: 0.8fr 1fr;
+    gap: 1rem;
+
+    .data {
+        display: grid;
+        gap: 0.8rem;
+
+        p {
+            font-size: 18px;
+            font-weight: 600;
+
+            margin-bottom: -2rem;
+        }
+
+        span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        button {
+            width: fit-content;
+        }
+    }
+}

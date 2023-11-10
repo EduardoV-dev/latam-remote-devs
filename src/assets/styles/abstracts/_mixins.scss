@@ -21,7 +21,7 @@
     @if $wrapper-name == 'content' {
         width: min(100% - 2rem, $wrapper-width);
     } @else {
-        width: min(100%, map-get(vars.$wrappers-width, $wrapper-width));
+        width: min(100%, $wrapper-width);
     }
 
     margin-inline: auto;
