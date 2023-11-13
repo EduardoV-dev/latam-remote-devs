@@ -1,0 +1,57 @@
+@use '/src/assets/styles/abstracts/functions' as fn;
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.skill-selector {
+    &__actions-group {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+}
+
+.skills {
+    background-color: fn.bg-color('white-darkened');
+    border-radius: 5px;
+    padding: 1rem;
+
+    .skill {
+        position: relative;
+
+        &__action {
+            background-color: transparent;
+            border: none;
+            outline: none;
+
+            display: flex;
+
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, 0);
+
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+
+            &:is(:hover, :focus) {
+                scale: 1.2;
+            }
+        }
+
+        &:is(:hover, :focus) {
+            background-color: fn.main-color('secondary');
+            color: fn.text-color('white');
+
+            .skill__action {
+                opacity: 1;
+                visibility: visible;
+                transform: translate(-50%, -110%);
+            }
+        }
+    }
+}

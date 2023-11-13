@@ -1,8 +1,8 @@
-import React from 'react';
 import { APP_ROUTES } from '@/config/routes';
 import { RouterItem } from '@/types/general';
 import { lazyImport } from '@/utils/lazy-import';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { RouterWrapper } from './wrapper';
 
 const { JobsFeedRoutes } = lazyImport(
     () => import('@/features/jobs-feed'),
@@ -15,23 +15,7 @@ const { AuthRoutes } = lazyImport(
 
 export const publicRoutes: RouterItem[] = [
     {
-        element: (
-            <React.Suspense
-                fallback={
-                    <div
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}
-                    >
-                        Cargando página
-                    </div>
-                }
-            >
-                <Outlet />
-            </React.Suspense>
-        ),
+        element: <RouterWrapper />,
         path: '/',
         children: [
             { path: '/', element: <Navigate to={APP_ROUTES.PUBLIC.JOBS} /> },

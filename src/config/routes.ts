@@ -3,5 +3,9 @@ export const APP_ROUTES = {
         JOBS: '/jobs',
         AUTH: '/auth',
     },
-    PRIVATE: {},
+    PRIVATE: {
+        DEV: {
+            ACCOUNT: '/dev/account',
+        },
+    },
 };

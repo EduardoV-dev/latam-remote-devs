@@ -22,7 +22,7 @@ a {
     font-weight: 600;
 }
 
-:is(input, .input) {
+:is(input, textarea, select, .input) {
     width: 100%;
     border: none;
     outline: none;
@@ -37,6 +37,11 @@ a {
     &:focus {
         box-shadow: 0 4px 0 0 #4b75c5;
     }
+}
+
+textarea {
+    min-height: 150px;
+    resize: none;
 }
 
 .center {
@@ -64,6 +69,12 @@ a {
 .form-error {
     color: fns.main-color('danger');
     margin-top: 0.5rem;
+}
+
+.two-columns {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
 }
 
 /** Antd Overrides **/

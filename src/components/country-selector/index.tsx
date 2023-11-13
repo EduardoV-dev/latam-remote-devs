@@ -1,7 +1,7 @@
 import { COUNTRIES } from './countries.contants';
 
 export const CountrySelector = (): JSX.Element => (
-    <select className="input">
+    <select>
         <option value="" hidden>
             Seleccione un país
         </option>

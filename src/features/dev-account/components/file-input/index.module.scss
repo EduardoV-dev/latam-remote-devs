@@ -1,0 +1,15 @@
+@use '/src/assets/styles/abstracts/functions' as fn;
+
+.label {
+    display: block;
+
+    border: 1px solid fn.main-color('primary');
+    border-radius: 5px;
+    padding: 3rem;
+    text-align: center;
+    color: fn.text-color('muted');
+}
+
+.input {
+    display: none;
+}
