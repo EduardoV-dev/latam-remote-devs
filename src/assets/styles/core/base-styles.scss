@@ -77,6 +77,28 @@ textarea {
     gap: 2rem;
 }
 
+.three-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &.align-start {
+        align-self: start;
+        margin-top: 2rem;
+    }
+
+    input {
+        flex-basis: 15px;
+        height: 15px;
+    }
+}
+
 /** Antd Overrides **/
 
 .ant-input {

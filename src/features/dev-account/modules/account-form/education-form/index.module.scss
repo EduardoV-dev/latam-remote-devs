@@ -1,0 +1,27 @@
+@use '/src/assets/styles/abstracts/functions' as fn;
+
+.form-container {
+    padding: 1.5rem;
+    padding-top: 0.5rem;
+    border-radius: 5px;
+    background-color: fn.bg-color('white');
+    border: 1px solid fn.main-color('primary');
+
+    .header {
+        display: flex;
+        justify-content: flex-end;
+
+        margin-bottom: 1rem;
+    }
+}
+
+.list {
+    margin-top: 2rem;
+
+    display: grid;
+    gap: 1rem;
+
+    padding: 1rem;
+    border-radius: 5px;
+    background-color: fn.bg-color('white-darkened');
+}

@@ -1,0 +1,18 @@
+@use '/src/assets/styles/abstracts/functions' as fn;
+
+.button {
+    width: 100%;
+    padding: 0.7rem 3rem;
+    background-color: fn.bg-color('white');
+    border: 1px solid fn.main-color('primary');
+    border-radius: 5px;
+
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    justify-content: flex-end;
+
+    &:is(:hover, :focus) {
+        background-color: fn.bg-color('white-darkened');
+    }
+}

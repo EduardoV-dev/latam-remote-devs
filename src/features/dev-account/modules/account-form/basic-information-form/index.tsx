@@ -1,7 +1,7 @@
 import { FormControl } from '@/components/form-control';
-import { TwoColumnedSection } from '../../components/two-columned-section';
+import { TwoColumnedSection } from '../../../components/two-columned-section';
 import { CountrySelector } from '@/components/country-selector';
-import { FileInput } from '../../components/file-input';
+import { FileInput } from '../../../components/file-input';
 
 export const BasicInformationForm = (): JSX.Element => (
     <TwoColumnedSection title="Información Básica">

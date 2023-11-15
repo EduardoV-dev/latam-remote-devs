@@ -1,6 +1,6 @@
 import { FormControl } from '@/components/form-control';
-import { TwoColumnedSection } from '../../components/two-columned-section';
-import { LimitedTextArea } from '../../components/limited-textarea';
+import { TwoColumnedSection } from '../../../components/two-columned-section';
+import { LimitedTextArea } from '../../../components/limited-textarea';
 
 export const ProfileBasedForm = (): JSX.Element => (
     <TwoColumnedSection title="Sobre el perfil">

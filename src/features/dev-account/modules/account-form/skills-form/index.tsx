@@ -1,10 +1,10 @@
 import { FormControl } from '@/components/form-control';
-import { TwoColumnedSection } from '../../components/two-columned-section';
+import { TwoColumnedSection } from '../../../components/two-columned-section';
 import styles from './index.module.scss';
 import { SkillSelector } from './skill-selector';
 import React from 'react';
 import clsx from 'clsx';
-import RemoveIcon from '../../assets/svg/remove.svg?react';
+import RemoveIcon from '../../../assets/svg/remove.svg?react';
 
 export interface Skill {
     name: string;
