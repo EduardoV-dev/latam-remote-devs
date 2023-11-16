@@ -1,7 +1,7 @@
 import { FormControl } from '@/components/form-control';
 import { TwoColumnedSection } from '../../../components/two-columned-section';
 import { CountrySelector } from '@/components/country-selector';
-import { FileInput } from '../../../components/file-input';
+import { ImageInput } from '@/features/dev-account/components/image-input';
 
 export const BasicInformationForm = (): JSX.Element => (
     <TwoColumnedSection title="Información Básica">
@@ -26,7 +26,7 @@ export const BasicInformationForm = (): JSX.Element => (
         </div>
 
         <FormControl label="Foto de perfil">
-            <FileInput accept="image/*" id="profile-picture" />
+            <ImageInput id="dev-profile-picture" />
         </FormControl>
     </TwoColumnedSection>
 );

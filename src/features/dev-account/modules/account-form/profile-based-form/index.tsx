@@ -1,6 +1,7 @@
 import { FormControl } from '@/components/form-control';
 import { TwoColumnedSection } from '../../../components/two-columned-section';
 import { LimitedTextArea } from '../../../components/limited-textarea';
+import { FileInput } from '@/features/dev-account/components/file-input';
 
 export const ProfileBasedForm = (): JSX.Element => (
     <TwoColumnedSection title="Sobre el perfil">
@@ -19,7 +20,7 @@ export const ProfileBasedForm = (): JSX.Element => (
         </FormControl>
 
         <FormControl label="CV" required>
-            <input />
+            <FileInput accept="application/pdf" id="dev-cv" />
         </FormControl>
 
         <div className="two-columns">
