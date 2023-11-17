@@ -3,15 +3,23 @@ import ResumeIcon from '../../assets/svg/resume.svg?react';
 import styles from './index.module.scss';
 
 interface Props {
-    accept: string;
     id: string;
+    onChange: (file: File) => void;
 }
 
-export const FileInput = ({ accept, id }: Props): JSX.Element => {
+export const FileInput = ({
+    id,
+    onChange: handleChange,
+}: Props): JSX.Element => {
     const [file, setFile] = React.useState<File>();
 
-    const onChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-        setFile(event.target.files?.[0]);
+    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        setFile(file);
+        handleChange(file);
+    };
 
     return (
         <div className={styles.container}>
@@ -21,7 +29,8 @@ export const FileInput = ({ accept, id }: Props): JSX.Element => {
                 </label>
 
                 <input
-                    {...{ id, accept, onChange }}
+                    {...{ id, onChange }}
+                    accept="application/pdf"
                     className={styles.input}
                     type="file"
                 />

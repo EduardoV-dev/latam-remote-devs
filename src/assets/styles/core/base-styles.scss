@@ -7,10 +7,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    @include mi.apply-font('primary');
 }
 
 body {
-    @include mi.apply-font('primary');
     background-color: fns.bg-color('white');
     font-size: 16px;
 }

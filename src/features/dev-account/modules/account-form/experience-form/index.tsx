@@ -6,18 +6,34 @@ import { ExperienceDAO } from '../../../types/experience';
 import styles from './index.module.scss';
 import { InformationCard } from '../../../components/information-card';
 import { formatDate } from '../../../utils/date-format';
+import { FormType } from '..';
 
-export const ExperienceForm = (): JSX.Element => {
+interface Props {
+    form: FormType;
+    onChange: (experience: ExperienceDAO[]) => void;
+}
+
+export const ExperienceForm = ({ form, onChange }: Props): JSX.Element => {
     const [isDisplayingForm, setIsDisplayingForm] =
         React.useState<boolean>(false);
 
     const [experiences, setExperiences] = React.useState<ExperienceDAO[]>([]);
 
-    const addExperience = (experience: ExperienceDAO): void =>
-        setExperiences((prev) => [...prev, experience]);
+    const addExperience = (experience: ExperienceDAO): void => {
+        const newExperiences = [...experiences, experience];
+        setExperiences(newExperiences);
+        onChange(newExperiences);
+    };
 
-    const removeExperience = (title: string) =>
-        setExperiences((prev) => prev.filter((item) => item.title === title));
+    const removeExperience = (title: string) => {
+        const newExperiences = experiences.filter(
+            (item) => item.title === title,
+        );
+        setExperiences(newExperiences);
+        onChange(newExperiences);
+    };
+
+    form.register('experience');
 
     return (
         <TwoColumnedSection title="Experiencia">

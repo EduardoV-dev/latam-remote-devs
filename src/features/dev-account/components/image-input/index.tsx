@@ -1,15 +1,6 @@
 import React from 'react';
 import styles from './index.module.scss';
 
-interface Props {
-    id: string;
-}
-
-interface ImageState {
-    file?: File;
-    preview?: string | ArrayBuffer | null;
-}
-
 const toBase64 = (file: Blob): Promise<string> =>
     new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -18,7 +9,20 @@ const toBase64 = (file: Blob): Promise<string> =>
         reader.onerror = (error) => reject(error);
     });
 
-export const ImageInput = ({ id }: Props): JSX.Element => {
+interface Props {
+    id: string;
+    onChange: (file: File) => void;
+}
+
+interface ImageState {
+    file?: File;
+    preview?: string | ArrayBuffer | null;
+}
+
+export const ImageInput = ({
+    id,
+    onChange: changeEvent,
+}: Props): JSX.Element => {
     const [state, setState] = React.useState<ImageState>({});
 
     const onChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,6 +31,7 @@ export const ImageInput = ({ id }: Props): JSX.Element => {
 
         const preview = await toBase64(file);
         setState({ file, preview });
+        changeEvent(file);
     };
 
     return (

@@ -1,7 +1,12 @@
+import { UseFormRegisterReturn } from 'react-hook-form';
 import { COUNTRIES } from './countries.contants';
 
-export const CountrySelector = (): JSX.Element => (
-    <select>
+interface Props {
+    register: UseFormRegisterReturn;
+}
+
+export const CountrySelector = ({ register }: Props): JSX.Element => (
+    <select {...register}>
         <option value="" hidden>
             Seleccione un país
         </option>

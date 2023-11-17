@@ -5,6 +5,7 @@ import { SkillSelector } from './skill-selector';
 import React from 'react';
 import clsx from 'clsx';
 import RemoveIcon from '../../../assets/svg/remove.svg?react';
+import { FormType } from '..';
 
 export interface Skill {
     name: string;
@@ -19,22 +20,38 @@ const SKILLS: Skill[] = [
     { name: 'Haha.js', value: 4 },
 ];
 
-export const SkillsForm = (): JSX.Element => {
+interface Props {
+    form: FormType;
+    onChange: (skills: number[]) => void;
+}
+
+export const SkillsForm = ({ onChange, form }: Props): JSX.Element => {
     const [selectedSkills, setSelectedSkills] = React.useState<number[]>([]);
 
-    const addToSkillSet = (skill: number): void =>
-        setSelectedSkills((prev) => [...prev, skill]);
+    const addToSkillSet = (skill: number): void => {
+        const newSkills = [...selectedSkills, skill];
+        setSelectedSkills(newSkills);
+        onChange(newSkills);
+    };
 
-    const removeSkillFromSkillSet = (skill: number): void =>
-        setSelectedSkills((prev) =>
-            prev.filter((skillValue) => skillValue !== skill),
+    const removeSkillFromSkillSet = (skill: number): void => {
+        const newSkills = selectedSkills.filter(
+            (skillValue) => skillValue !== skill,
         );
+        setSelectedSkills(newSkills);
+        onChange(newSkills);
+    };
 
     // === Render
 
     const skillsWithoutSelectedOnes = SKILLS.filter(
         (skill) => !selectedSkills.includes(skill.value),
     );
+
+    form.register('skills', {
+        validate: (skills) =>
+            (skills && skills.length >= 3) || 'Debe elegir al menos 3 skills',
+    });
 
     return (
         <TwoColumnedSection title="Tecnologías">
@@ -45,7 +62,10 @@ export const SkillsForm = (): JSX.Element => {
                 />
 
                 <section>
-                    <FormControl label="Listado">
+                    <FormControl
+                        label="Listado"
+                        errorMessage={form.formState.errors.skills?.message}
+                    >
                         {selectedSkills.length > 0 && (
                             <div className={clsx('group', styles['skills'])}>
                                 {selectedSkills.map((skillValue) => {

@@ -6,18 +6,32 @@ import styles from './index.module.scss';
 import { InformationCard } from '../../../components/information-card';
 import { formatDate } from '../../../utils/date-format';
 import { EducationDAO } from '../../../types/education';
+import { FormType } from '..';
 
-export const EducationForm = (): JSX.Element => {
+interface Props {
+    form: FormType;
+    onChange: (education: EducationDAO[]) => void;
+}
+
+export const EducationForm = ({ form, onChange }: Props): JSX.Element => {
     const [isDisplayingForm, setIsDisplayingForm] =
         React.useState<boolean>(false);
 
     const [education, setEducation] = React.useState<EducationDAO[]>([]);
 
-    const addExperience = (educationItem: EducationDAO): void =>
-        setEducation((prev) => [...prev, educationItem]);
+    const addEducation = (educationItem: EducationDAO): void => {
+        const newEducation = [...education, educationItem];
+        setEducation(newEducation);
+        onChange(newEducation);
+    };
 
-    const removeEducation = (title: string) =>
-        setEducation((prev) => prev.filter((item) => item.title === title));
+    const removeEducation = (title: string) => {
+        const newEducation = education.filter((item) => item.title === title);
+        setEducation(newEducation);
+        onChange(newEducation);
+    };
+
+    form.register('education');
 
     return (
         <TwoColumnedSection title="Educación">
@@ -29,7 +43,7 @@ export const EducationForm = (): JSX.Element => {
             ) : (
                 <EducationFormElement
                     closeForm={() => setIsDisplayingForm(false)}
-                    onAdd={addExperience}
+                    onAdd={addEducation}
                 />
             )}
 
