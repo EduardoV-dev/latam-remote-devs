@@ -68,18 +68,24 @@ export const BasicInformationForm = ({ form }: Props): JSX.Element => {
                 </FormControl>
             </div>
 
-            <FormControl
-                label="Teléfono"
-                required
-                errorMessage={basic?.telephone?.message}
-            >
-                <input
-                    type="tel"
-                    {...form.register('basic.telephone', {
-                        required: 'El teléfono no puede quedar vacío',
-                    })}
-                />
-            </FormControl>
+            <div className="two-columns">
+                <FormControl label="Dirección">
+                    <input type="text" {...form.register('basic.address')} />
+                </FormControl>
+
+                <FormControl
+                    label="Teléfono"
+                    required
+                    errorMessage={basic?.telephone?.message}
+                >
+                    <input
+                        type="tel"
+                        {...form.register('basic.telephone', {
+                            required: 'El teléfono no puede quedar vacío',
+                        })}
+                    />
+                </FormControl>
+            </div>
 
             <FormControl label="Foto de perfil">
                 <ImageInput

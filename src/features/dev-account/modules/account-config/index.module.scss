@@ -1,0 +1,26 @@
+@use '/src/assets/styles/abstracts/functions' as fn;
+
+.title {
+    margin-block: 4rem 2rem;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    padding-block: 1.5rem;
+    border-bottom: 1px solid rgba(fn.text-color('muted'), 0.3);
+
+    &:first-of-type {
+        border-top: 1px solid rgba(fn.text-color('muted'), 0.3);
+    }
+
+    p {
+        font-size: 16px;
+        font-weight: 600;
+    }
+}

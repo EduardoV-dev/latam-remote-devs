@@ -15,7 +15,7 @@ export const devRoutes: RouterItem[] = [
         children: [
             {
                 element: <DevAccountRoutes />,
-                path: `${APP_ROUTES.PRIVATE.DEV.ACCOUNT}/*`,
+                path: `${APP_ROUTES.PRIVATE.DEV.ACCOUNT.BASE}/*`,
             },
         ],
     },

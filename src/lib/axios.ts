@@ -1,8 +1,9 @@
 import Axios, { AxiosHeaders } from 'axios';
-import cookie from 'typescript-cookie';
+import { getCookie } from 'typescript-cookie';
 
 import { BACKEND_BASE_URL } from '@/config/api';
 import { TOKEN_KEY } from '@/config/sessions';
+import { Auth, UserDeveloperResponse } from './auth';
 
 // import { Auth } from './auth';
 
@@ -11,13 +12,11 @@ export const axios = Axios.create({
 });
 
 axios.interceptors.request.use((config) => {
-    const token: string | undefined = cookie.getCookie(TOKEN_KEY);
+    const data: string | undefined = getCookie(TOKEN_KEY);
+    if (!data) return config;
 
-    if (token)
-        (config.headers as AxiosHeaders).set(
-            'Authorization',
-            `Bearer ${token}`,
-        );
+    const token = (JSON.parse(data) as UserDeveloperResponse).token;
+    (config.headers as AxiosHeaders).set('Authorization', `Bearer ${token}`);
 
     return config;
 });
@@ -25,9 +24,9 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use(
     (response) => response.data,
     (error) => {
-        // const isUnauthorized = error.response?.status === 401;
+        const isUnauthorized = error.response?.status === 401;
 
-        // if (isUnauthorized) Auth.logout();
+        if (isUnauthorized) Auth.logoutReload();
 
         if (error.code === 'ERR_NETWORK')
             return Promise.reject(

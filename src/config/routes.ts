@@ -5,7 +5,12 @@ export const APP_ROUTES = {
     },
     PRIVATE: {
         DEV: {
-            ACCOUNT: '/dev/account',
+            ACCOUNT: {
+                BASE: '/dev/account',
+                NEW: '/dev/account/new',
+                EDIT: '/dev/account/information',
+            },
+            JOBS: '/dev/jobs',
         },
     },
 };

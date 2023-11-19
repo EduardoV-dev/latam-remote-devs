@@ -1,0 +1,50 @@
+@use '/src/assets/styles/abstracts/functions' as fn;
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    p {
+        font-size: 28px;
+        font-weight: 600;
+    }
+
+    img {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+    }
+}
+
+.information {
+    margin-top: 1rem;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    border-radius: 5px;
+    border: 1px solid fn.main-color('primary');
+    padding: 1.5rem;
+    transition: all 0.1s ease;
+
+    &:hover,
+    &:focus {
+        background-color: fn.bg-color('white-darkened');
+    }
+
+    div {
+        display: grid;
+        gap: 0.7rem;
+
+        p {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    }
+}

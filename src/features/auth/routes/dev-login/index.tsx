@@ -1,11 +1,16 @@
 import { FormControl } from '@/components/form-control';
+import { Auth } from '@/lib/auth';
+import { toast } from 'react-toastify';
 import { Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import styles from './index.module.scss';
 import clsx from 'clsx';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { emailRegex } from '../../constants/form.regex';
+import { useDevLogin } from '../../api/dev-login';
+import { APP_ROUTES } from '@/config/routes';
+import { Role, useAuthUserStore } from '../../stores/auth-user';
 
 interface Login {
     email: string;
@@ -13,10 +18,24 @@ interface Login {
 }
 
 export const DevLogin = (): JSX.Element => {
+    const store = useAuthUserStore();
+    const navigate = useNavigate();
     const form = useForm<Login>();
-    const { errors } = form.formState;
+    const { isLoading, mutate } = useDevLogin({
+        onSuccess: (data) => {
+            Auth.saveAuth(data);
+            navigate(APP_ROUTES.PUBLIC.JOBS);
+            store.setIsLoggedIn(true);
+            store.setRole(data.user.role as Role);
+        },
+        onError: (error) => {
+            toast.error(error.message);
+        },
+    });
 
-    const onSubmit: SubmitHandler<Login> = (data) => console.log(data);
+    const onSubmit: SubmitHandler<Login> = (data) => !isLoading && mutate(data);
+
+    const { errors } = form.formState;
 
     return (
         <>
@@ -49,8 +68,8 @@ export const DevLogin = (): JSX.Element => {
                             required: 'Ingrese su contraseña',
                             minLength: {
                                 message:
-                                    'La contraseña debe de ser mínimo de 5 carácteres',
-                                value: 5,
+                                    'La contraseña debe de ser mínimo de 6 carácteres',
+                                value: 6,
                             },
                         })}
                     />
@@ -60,6 +79,7 @@ export const DevLogin = (): JSX.Element => {
                     className={clsx(styles.submit, 'center')}
                     type="primary"
                     htmlType="submit"
+                    disabled={isLoading}
                 >
                     Ingresar
                 </Button>

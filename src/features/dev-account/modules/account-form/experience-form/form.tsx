@@ -25,7 +25,6 @@ export const ExperienceFormElement = ({
             endDate: keepWorkingHere ? null : `${data.endDate} 00:00`,
             startDate: `${data.startDate} 00:00`,
         });
-        form.reset();
         closeForm();
     };
 

@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { Button } from 'antd';
 import { BasicInformationForm } from './basic-information-form';
 import { EducationForm } from './education-form';
@@ -8,12 +9,15 @@ import styles from './index.module.scss';
 import { SubmitHandler, UseFormReturn, useForm } from 'react-hook-form';
 import { ExperienceDAO } from '../../types/experience';
 import { EducationDAO } from '../../types/education';
+import { Auth } from '@/lib/auth';
+import { useAccountHandling } from '../../api/create-account';
 
 export interface UserAccount {
     basic: {
         name: string;
         lastname: string;
         country: string;
+        address: string;
         city: string;
         telephone: string;
         profilePicture: File;
@@ -33,11 +37,79 @@ export interface UserAccount {
 
 export type FormType = UseFormReturn<UserAccount, any, undefined>;
 
-export const AccountForm = (): JSX.Element => {
-    const form = useForm<UserAccount>();
+interface Props {
+    onSuccess: () => void;
+    initialValues?: UserAccount;
+}
+
+export const AccountForm = ({
+    onSuccess,
+    initialValues,
+}: Props): JSX.Element => {
+    const { isLoading, mutate } = useAccountHandling({
+        onSuccess: (data) => {
+            const developerData = data[1].value;
+            const developerPicture = data[0].value;
+
+            Auth.updateAuth(developerData, developerPicture);
+            onSuccess();
+        },
+        onError: (error) => {
+            toast.error(error.message);
+        },
+    });
+
+    const form = useForm<UserAccount>({
+        defaultValues: {
+            ...initialValues,
+        },
+    });
 
     const onSubmit: SubmitHandler<UserAccount> = (data) => {
+        if (isLoading) return;
         console.log(data);
+
+        // mutate({
+        //     account: {
+        //         about: data.profile.about,
+        //         address: data.basic.address,
+        //         city: data.basic.city,
+        //         country: data.basic.country,
+        //         DeveloperSkill: data.skills.map((skill) => ({
+        //             skillId: skill,
+        //         })),
+        //         Education:
+        //             data.education?.map((education) => ({
+        //                 description: education.description,
+        //                 endDate: education.endDate,
+        //                 institution: education.institute,
+        //                 startDate: education.startDate,
+        //                 title: education.title,
+        //             })) || [],
+        //         email: Auth.getAuth()?.user.email || '',
+        //         firstName: data.basic.name,
+        //         github: data.profile.github,
+        //         JobExperience:
+        //             data.experience?.map((exp) => ({
+        //                 companyName: exp.company,
+        //                 description: exp.description,
+        //                 endDate: exp.endDate,
+        //                 location: exp.location,
+        //                 position: exp.title,
+        //                 startDate: exp.startDate,
+        //             })) || [],
+        //         lastName: data.basic.lastname,
+        //         linkedin: data.profile.linkedin,
+        //         telephone: data.basic.telephone,
+        //         title: data.profile.profesionalTitle,
+        //         website: data.profile.website,
+        //     },
+        //     upload: {
+        //         picture: data.basic.profilePicture,
+        //         cv: data.profile.cv,
+        //     },
+        //     type: initialValues ? 'patch' : 'post',
+        // });
     };
 
     return (
@@ -59,7 +131,12 @@ export const AccountForm = (): JSX.Element => {
                 onChange={(education) => form.setValue('education', education)}
             />
 
-            <Button type="primary" className={styles.button} htmlType="submit">
+            <Button
+                type="primary"
+                disabled={isLoading}
+                className={styles.button}
+                htmlType="submit"
+            >
                 Finalizar Perfil
             </Button>
         </form>

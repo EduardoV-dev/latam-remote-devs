@@ -2,5 +2,5 @@
 /// <reference types="vite-plugin-svgr/client" />
 
 interface ImportMetaEnv {
-    readonly BACKEND_BASE_URL: string;
+    readonly VITE_APP_BACKEND_BASE_URL: string;
 }

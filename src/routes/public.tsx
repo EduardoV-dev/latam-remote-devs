@@ -13,7 +13,7 @@ const { AuthRoutes } = lazyImport(
     'AuthRoutes',
 );
 
-export const publicRoutes: RouterItem[] = [
+export const getPublicRoutes = (isAuthenticated: boolean): RouterItem[] => [
     {
         element: <RouterWrapper />,
         path: '/',
@@ -23,10 +23,12 @@ export const publicRoutes: RouterItem[] = [
                 path: `${APP_ROUTES.PUBLIC.JOBS}/*`,
                 element: <JobsFeedRoutes />,
             },
-            {
-                path: `${APP_ROUTES.PUBLIC.AUTH}/*`,
-                element: <AuthRoutes />,
-            },
+            !isAuthenticated
+                ? {
+                      path: `${APP_ROUTES.PUBLIC.AUTH}/*`,
+                      element: <AuthRoutes />,
+                  }
+                : ({} as RouterItem),
         ],
     },
 ];

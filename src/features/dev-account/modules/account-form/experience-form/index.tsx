@@ -27,13 +27,15 @@ export const ExperienceForm = ({ form, onChange }: Props): JSX.Element => {
 
     const removeExperience = (title: string) => {
         const newExperiences = experiences.filter(
-            (item) => item.title === title,
+            (item) => item.title !== title,
         );
         setExperiences(newExperiences);
         onChange(newExperiences);
     };
 
-    form.register('experience');
+    React.useEffect(() => {
+        form.register('experience');
+    }, [form]);
 
     return (
         <TwoColumnedSection title="Experiencia">

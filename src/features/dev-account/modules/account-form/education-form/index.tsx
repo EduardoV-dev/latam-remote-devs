@@ -26,12 +26,14 @@ export const EducationForm = ({ form, onChange }: Props): JSX.Element => {
     };
 
     const removeEducation = (title: string) => {
-        const newEducation = education.filter((item) => item.title === title);
+        const newEducation = education.filter((item) => item.title !== title);
         setEducation(newEducation);
         onChange(newEducation);
     };
 
-    form.register('education');
+    React.useEffect(() => {
+        form.register('education');
+    }, [form]);
 
     return (
         <TwoColumnedSection title="Educación">

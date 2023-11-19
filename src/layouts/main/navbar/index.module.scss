@@ -40,3 +40,86 @@
         gap: 2rem;
     }
 }
+
+.user-menu {
+    position: relative;
+    margin-top: 0.5rem;
+
+    button {
+        border: none;
+        background-color: transparent;
+        outline-color: transparent;
+        cursor: pointer;
+    }
+
+    .popup-menu {
+        overflow: hidden;
+        position: absolute;
+        top: 70px;
+        right: 0;
+        line-height: 3.5;
+
+        min-width: 300px;
+
+        background-color: fn.bg-color('white');
+        border: 1px solid fn.main-color('primary');
+        border-radius: 5px;
+
+        &::before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: -29px;
+            right: 10px;
+
+            border: 15px solid transparent;
+            border-bottom-color: fn.main-color('primary');
+        }
+
+        p {
+            padding-inline: 1rem;
+        }
+
+        nav {
+            margin-top: 0.5rem;
+
+            a {
+                padding-inline: 1rem;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                background-color: fn.bg-color('white');
+                transition: all 0.1s ease;
+
+                &:hover,
+                &:focus {
+                    background-color: fn.bg-color('white-darkened');
+                }
+
+                svg {
+                    width: 32px;
+                }
+            }
+        }
+
+        button {
+            display: block;
+            width: 100%;
+
+            border: none;
+            outline-color: none;
+            background-color: fn.bg-color('white');
+            padding-block: 1rem;
+            border-top: 1px solid fn.main-color('primary');
+            margin-top: 1rem;
+            text-align: center;
+            transition: all 0.1s ease;
+
+            &:hover,
+            :focus {
+                background-color: fn.bg-color('white-darkened');
+            }
+        }
+    }
+}
