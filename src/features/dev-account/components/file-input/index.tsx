@@ -25,7 +25,7 @@ export const FileInput = ({
 
     return (
         <div className={styles.container}>
-            <div>
+            <div className={styles.element}>
                 <label className={styles.label} htmlFor={id}>
                     Haz clic para buscar en tus archivos
                 </label>
@@ -38,11 +38,22 @@ export const FileInput = ({
                 />
             </div>
 
-            {(file || initialValue) && (
+            {file && (
                 <div className={styles.preview}>
                     <ResumeIcon />
-                    <span>{initialValue ? 'Resume.pdf' : file?.name}</span>
+                    <span>{file.name}</span>
                 </div>
+            )}
+
+            {initialValue && (
+                <a
+                    className={styles.preview}
+                    href={initialValue}
+                    target="_blank"
+                >
+                    <ResumeIcon />
+                    <span>Resume.pdf</span>
+                </a>
             )}
         </div>
     );

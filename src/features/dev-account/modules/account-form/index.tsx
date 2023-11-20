@@ -48,7 +48,6 @@ export const AccountForm = ({
 }: Props): JSX.Element => {
     const { isLoading, mutate } = useAccountHandling({
         onSuccess: (data) => {
-            console.log('success');
             Auth.updateAuth(data);
             onSuccess();
         },
