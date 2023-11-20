@@ -11,7 +11,7 @@ export const DevAccountRoutes = (): JSX.Element => {
             <Routes>
                 <Route path="" element={<ProfilePage />} />
                 <Route path="new" element={<NewAccount />} />
-                <Route path="   information" element={<EditAccount />} />
+                <Route path="information" element={<EditAccount />} />
                 <Route path="jobs" element={<JobApplications />} />
             </Routes>
         </MainLayout>

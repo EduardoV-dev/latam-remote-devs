@@ -3,12 +3,14 @@ import { TwoColumnedSection } from '../../../components/two-columned-section';
 import { LimitedTextArea } from '../../../components/limited-textarea';
 import { FileInput } from '@/features/dev-account/components/file-input';
 import { FormType } from '..';
+import { useFormEditStore } from '@/features/dev-account/stores/form-edit';
 
 interface Props {
     form: FormType;
 }
 
 export const ProfileBasedForm = ({ form }: Props): JSX.Element => {
+    const isEditing = useFormEditStore((state) => state.isEditing);
     const { profile } = form.formState.errors;
 
     form.register('profile.about', {
@@ -16,7 +18,9 @@ export const ProfileBasedForm = ({ form }: Props): JSX.Element => {
     });
 
     form.register('profile.cv', {
-        required: 'Debe subir un CV',
+        ...(!isEditing && {
+            required: 'Debe subir un CV',
+        }),
     });
 
     return (
@@ -48,6 +52,9 @@ export const ProfileBasedForm = ({ form }: Props): JSX.Element => {
                 <LimitedTextArea
                     maxCharacters={250}
                     onChange={(value) => form.setValue('profile.about', value)}
+                    initialValue={
+                        isEditing ? form.getValues('profile.about') : ''
+                    }
                 />
             </FormControl>
 
@@ -59,6 +66,11 @@ export const ProfileBasedForm = ({ form }: Props): JSX.Element => {
                 <FileInput
                     id="dev-cv"
                     onChange={(file) => form.setValue('profile.cv', file)}
+                    initialValue={
+                        isEditing
+                            ? (form.getValues('profile.cv') as string)
+                            : undefined
+                    }
                 />
             </FormControl>
 

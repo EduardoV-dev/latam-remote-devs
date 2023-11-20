@@ -12,6 +12,7 @@ const toBase64 = (file: Blob): Promise<string> =>
 interface Props {
     id: string;
     onChange: (file: File) => void;
+    initialValue?: string;
 }
 
 interface ImageState {
@@ -22,8 +23,11 @@ interface ImageState {
 export const ImageInput = ({
     id,
     onChange: changeEvent,
+    initialValue,
 }: Props): JSX.Element => {
-    const [state, setState] = React.useState<ImageState>({});
+    const [state, setState] = React.useState<ImageState>({
+        preview: initialValue,
+    });
 
     const onChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];

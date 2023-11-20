@@ -5,13 +5,15 @@ import clsx from 'clsx';
 interface Props {
     maxCharacters: number;
     onChange: (value: string) => void;
+    initialValue: string;
 }
 
 export const LimitedTextArea = ({
     maxCharacters,
     onChange,
+    initialValue,
 }: Props): JSX.Element => {
-    const [value, setValue] = React.useState<string>('');
+    const [value, setValue] = React.useState<string>(initialValue);
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const newInput: string = event.target.value;

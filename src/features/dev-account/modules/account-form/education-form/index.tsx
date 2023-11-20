@@ -17,7 +17,9 @@ export const EducationForm = ({ form, onChange }: Props): JSX.Element => {
     const [isDisplayingForm, setIsDisplayingForm] =
         React.useState<boolean>(false);
 
-    const [education, setEducation] = React.useState<EducationDAO[]>([]);
+    const [education, setEducation] = React.useState<EducationDAO[]>(
+        form.getValues('education') || [],
+    );
 
     const addEducation = (educationItem: EducationDAO): void => {
         const newEducation = [...education, educationItem];

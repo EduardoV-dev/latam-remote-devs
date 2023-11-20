@@ -20,13 +20,13 @@ export interface UserAccount {
         address: string;
         city: string;
         telephone: string;
-        profilePicture: File;
+        profilePicture: File | string;
     };
     profile: {
         profesionalTitle: string;
         website: string;
         about: string;
-        cv: File;
+        cv: File | string;
         github: string;
         linkedin: string;
     };
@@ -48,6 +48,7 @@ export const AccountForm = ({
 }: Props): JSX.Element => {
     const { isLoading, mutate } = useAccountHandling({
         onSuccess: (data) => {
+            console.log('success');
             Auth.updateAuth(data);
             onSuccess();
         },
@@ -59,6 +60,8 @@ export const AccountForm = ({
     const form = useForm<UserAccount>({
         defaultValues: {
             ...initialValues,
+            experience: initialValues?.experience,
+            education: initialValues?.education,
         },
     });
 
@@ -101,8 +104,14 @@ export const AccountForm = ({
                 website: data.profile.website,
             },
             upload: {
-                picture: data.basic.profilePicture,
-                cv: data.profile.cv,
+                picture:
+                    typeof data.basic.profilePicture === 'string'
+                        ? undefined
+                        : data.basic.profilePicture,
+                cv:
+                    typeof data.profile.cv === 'string'
+                        ? undefined
+                        : data.profile.cv,
             },
             type: initialValues ? 'patch' : 'post',
         });
@@ -133,7 +142,7 @@ export const AccountForm = ({
                 className={styles.button}
                 htmlType="submit"
             >
-                Finalizar Perfil
+                {initialValues ? 'Actualizar perfil' : 'Finalizar perfil'}
             </Button>
         </form>
     );

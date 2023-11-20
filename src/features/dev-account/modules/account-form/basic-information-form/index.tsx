@@ -3,12 +3,14 @@ import { TwoColumnedSection } from '../../../components/two-columned-section';
 import { CountrySelector } from '@/components/country-selector';
 import { ImageInput } from '@/features/dev-account/components/image-input';
 import { FormType } from '..';
+import { useFormEditStore } from '@/features/dev-account/stores/form-edit';
 
 interface Props {
     form: FormType;
 }
 
 export const BasicInformationForm = ({ form }: Props): JSX.Element => {
+    const isEditing = useFormEditStore((state) => state.isEditing);
     const { basic } = form.formState.errors;
 
     return (
@@ -92,6 +94,11 @@ export const BasicInformationForm = ({ form }: Props): JSX.Element => {
                     id="dev-profile-picture"
                     onChange={(file) =>
                         form.setValue('basic.profilePicture', file)
+                    }
+                    initialValue={
+                        isEditing
+                            ? (form.getValues('basic.profilePicture') as string)
+                            : undefined
                     }
                 />
             </FormControl>

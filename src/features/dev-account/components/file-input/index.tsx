@@ -5,11 +5,13 @@ import styles from './index.module.scss';
 interface Props {
     id: string;
     onChange: (file: File) => void;
+    initialValue?: string;
 }
 
 export const FileInput = ({
     id,
     onChange: handleChange,
+    initialValue,
 }: Props): JSX.Element => {
     const [file, setFile] = React.useState<File>();
 
@@ -36,10 +38,10 @@ export const FileInput = ({
                 />
             </div>
 
-            {file && (
+            {(file || initialValue) && (
                 <div className={styles.preview}>
                     <ResumeIcon />
-                    <span>{file.name}</span>
+                    <span>{initialValue ? 'Resume.pdf' : file?.name}</span>
                 </div>
             )}
         </div>

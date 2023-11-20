@@ -17,7 +17,9 @@ export const ExperienceForm = ({ form, onChange }: Props): JSX.Element => {
     const [isDisplayingForm, setIsDisplayingForm] =
         React.useState<boolean>(false);
 
-    const [experiences, setExperiences] = React.useState<ExperienceDAO[]>([]);
+    const [experiences, setExperiences] = React.useState<ExperienceDAO[]>(
+        form.getValues('experience') || [],
+    );
 
     const addExperience = (experience: ExperienceDAO): void => {
         const newExperiences = [...experiences, experience];

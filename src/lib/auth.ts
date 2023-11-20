@@ -5,9 +5,6 @@ import { DeveloperAccountDAO, DeveloperLogin } from '@/features/dev-account';
 import { AuthResponse } from '@/types/auth';
 import { FIRST_TIME_AUTH, TOKEN_KEY } from '@/config/sessions';
 
-// import { TOKEN_KEY} from '@/config/sessions';
-// import { AuthUser, AuthResponse, TokenPayload } from '@/types/auth';
-
 export interface UserDeveloper {
     id: number;
     email: string;

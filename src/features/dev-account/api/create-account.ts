@@ -13,7 +13,12 @@ export const handleAccountInformation = async (
     params: DeveloperAccountDTO,
     type: 'post' | 'patch',
 ): Promise<DeveloperAccountDAO> =>
-    await axios[type](CREATE_ACCOUNT_ENDPOINT, params);
+    await axios[type](
+        `${CREATE_ACCOUNT_ENDPOINT}${
+            type === 'patch' ? `/${Auth.getAuth()!.user.developer!.id}` : ''
+        }`,
+        params,
+    );
 
 const uploadCV = async (
     cv: File | undefined,
@@ -21,7 +26,8 @@ const uploadCV = async (
 ): Promise<string | null> =>
     new Promise((resolve, reject) => {
         try {
-            if (!cv) resolve(null);
+            if (!cv) return resolve(null);
+
             const cvForm = new FormData();
             cvForm.append('file', cv!);
 
@@ -64,10 +70,14 @@ const handleAccount = async ({
         uploadCV(upload.cv, response.id),
     ]);
 
+    const cvUrl = (cv as any).value ?? response.cvUrl;
+    const profilePicture =
+        (picture as any).value ?? (Auth.getAuth()?.user.photoUrl || '');
+
     return {
         ...response,
-        cvUrl: (cv as any).value,
-        picture: (picture as any).value,
+        cvUrl: cvUrl,
+        picture: profilePicture,
     };
 };
 

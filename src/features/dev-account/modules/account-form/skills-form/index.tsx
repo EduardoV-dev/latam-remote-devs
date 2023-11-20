@@ -26,7 +26,9 @@ interface Props {
 }
 
 export const SkillsForm = ({ onChange, form }: Props): JSX.Element => {
-    const [selectedSkills, setSelectedSkills] = React.useState<number[]>([]);
+    const [selectedSkills, setSelectedSkills] = React.useState<number[]>(
+        form.getValues('skills') || [],
+    );
 
     const addToSkillSet = (skill: number): void => {
         const newSkills = [...selectedSkills, skill];
