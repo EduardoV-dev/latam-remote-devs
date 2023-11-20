@@ -1,6 +1,6 @@
-import EmailIcon from '../../assets/svg/email.svg?react';
-import TelephoneIcon from '../../assets/svg/telephone.svg?react';
-import LocationIcon from '../../assets/svg/location.svg?react';
+import LocationIcon from '@/assets/svg/location.svg?react';
+import EmailIcon from '@/assets/svg/email.svg?react';
+import TelephoneIcon from '@/assets/svg/telephone.svg?react';
 import ChevronRightIcon from '../../assets/svg/chevron-right.svg?react';
 
 import styles from './index.module.scss';

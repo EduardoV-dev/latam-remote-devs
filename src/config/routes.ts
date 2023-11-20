@@ -2,7 +2,7 @@ export const APP_ROUTES = {
     PUBLIC: {
         JOBS: '/jobs',
         AUTH: '/auth',
-        COMPANY_DETAILS: '/company/:id',
+        COMPANY_DETAILS: '/jobs/company/:id',
     },
     PRIVATE: {
         DEV: {
