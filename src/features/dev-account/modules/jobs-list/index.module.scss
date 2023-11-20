@@ -1,0 +1,49 @@
+@use '/src/assets/styles/abstracts/mixins' as mi;
+@use '/src/assets/styles/abstracts/functions' as fn;
+
+.container {
+    @include mi.apply-wrapper('medium');
+    margin-top: 3rem;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.job {
+    border-radius: 10px;
+    border: 1px solid fn.main-color('primary');
+    padding: 1rem;
+
+    &-title {
+        font-weight: 600;
+        font-size: 16px;
+
+        small {
+            margin-left: 1rem;
+        }
+    }
+
+    &-company {
+        margin-top: 0.5rem;
+
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+
+        a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    }
+
+    &-actions {
+        margin-top: 1.5rem;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+}

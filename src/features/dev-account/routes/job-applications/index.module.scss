@@ -1,0 +1,10 @@
+@use '/src/assets/styles/abstracts/functions' as fn;
+
+.title {
+    font-size: 28px;
+    font-weight: 600;
+
+    span {
+        color: fn.main-color('primary');
+    }
+}
