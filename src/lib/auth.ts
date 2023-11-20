@@ -1,7 +1,7 @@
 import { getCookie, removeCookie, setCookie } from 'typescript-cookie';
 // import jwtDecode from 'jwt-decode';
 
-import { DeveloperLogin } from '@/features/dev-account';
+import { DeveloperAccountDAO, DeveloperLogin } from '@/features/dev-account';
 import { AuthResponse } from '@/types/auth';
 import { FIRST_TIME_AUTH, TOKEN_KEY } from '@/config/sessions';
 
@@ -59,8 +59,7 @@ export class Auth {
     };
 
     public static updateAuth = (
-        developer: DeveloperLogin,
-        pictureUrl: string,
+        developer: DeveloperAccountDAO & { picture: string },
     ) => {
         const cookie = getCookie(TOKEN_KEY);
         if (!cookie) return;
@@ -69,7 +68,7 @@ export class Auth {
             ...cookieData,
             user: {
                 ...cookieData.user,
-                photoUrl: pictureUrl,
+                photoUrl: developer.picture,
                 developer: { ...developer },
             },
         };

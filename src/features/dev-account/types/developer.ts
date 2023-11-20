@@ -60,8 +60,8 @@ export interface DeveloperAccountDAO
 }
 
 export interface DeveloperMedia {
-    picture: File;
-    cv: File;
+    picture: File | undefined;
+    cv: File | undefined;
 }
 
 export interface DeveloperData {

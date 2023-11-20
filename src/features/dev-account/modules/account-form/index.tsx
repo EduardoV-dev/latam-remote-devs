@@ -48,10 +48,7 @@ export const AccountForm = ({
 }: Props): JSX.Element => {
     const { isLoading, mutate } = useAccountHandling({
         onSuccess: (data) => {
-            const developerData = data[1].value;
-            const developerPicture = data[0].value;
-
-            Auth.updateAuth(developerData, developerPicture);
+            Auth.updateAuth(data);
             onSuccess();
         },
         onError: (error) => {
@@ -67,49 +64,48 @@ export const AccountForm = ({
 
     const onSubmit: SubmitHandler<UserAccount> = (data) => {
         if (isLoading) return;
-        console.log(data);
 
-        // mutate({
-        //     account: {
-        //         about: data.profile.about,
-        //         address: data.basic.address,
-        //         city: data.basic.city,
-        //         country: data.basic.country,
-        //         DeveloperSkill: data.skills.map((skill) => ({
-        //             skillId: skill,
-        //         })),
-        //         Education:
-        //             data.education?.map((education) => ({
-        //                 description: education.description,
-        //                 endDate: education.endDate,
-        //                 institution: education.institute,
-        //                 startDate: education.startDate,
-        //                 title: education.title,
-        //             })) || [],
-        //         email: Auth.getAuth()?.user.email || '',
-        //         firstName: data.basic.name,
-        //         github: data.profile.github,
-        //         JobExperience:
-        //             data.experience?.map((exp) => ({
-        //                 companyName: exp.company,
-        //                 description: exp.description,
-        //                 endDate: exp.endDate,
-        //                 location: exp.location,
-        //                 position: exp.title,
-        //                 startDate: exp.startDate,
-        //             })) || [],
-        //         lastName: data.basic.lastname,
-        //         linkedin: data.profile.linkedin,
-        //         telephone: data.basic.telephone,
-        //         title: data.profile.profesionalTitle,
-        //         website: data.profile.website,
-        //     },
-        //     upload: {
-        //         picture: data.basic.profilePicture,
-        //         cv: data.profile.cv,
-        //     },
-        //     type: initialValues ? 'patch' : 'post',
-        // });
+        mutate({
+            account: {
+                about: data.profile.about,
+                address: data.basic.address,
+                city: data.basic.city,
+                country: data.basic.country,
+                DeveloperSkill: data.skills.map((skill) => ({
+                    skillId: skill,
+                })),
+                Education:
+                    data.education?.map((education) => ({
+                        description: education.description,
+                        endDate: education.endDate,
+                        institution: education.institute,
+                        startDate: education.startDate,
+                        title: education.title,
+                    })) || [],
+                email: Auth.getAuth()?.user.email || '',
+                firstName: data.basic.name,
+                github: data.profile.github,
+                JobExperience:
+                    data.experience?.map((exp) => ({
+                        companyName: exp.company,
+                        description: exp.description,
+                        endDate: exp.endDate,
+                        location: exp.location,
+                        position: exp.title,
+                        startDate: exp.startDate,
+                    })) || [],
+                lastName: data.basic.lastname,
+                linkedin: data.profile.linkedin,
+                telephone: data.basic.telephone,
+                title: data.profile.profesionalTitle,
+                website: data.profile.website,
+            },
+            upload: {
+                picture: data.basic.profilePicture,
+                cv: data.profile.cv,
+            },
+            type: initialValues ? 'patch' : 'post',
+        });
     };
 
     return (
