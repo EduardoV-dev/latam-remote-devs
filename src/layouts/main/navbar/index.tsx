@@ -35,6 +35,13 @@ export const Navbar = (): JSX.Element => {
                     >
                         Registrarse
                     </NavLink>
+                    <NavLink
+                        className={getLinkClasses}
+                        to="/company/auth/login"
+                        style={{ marginLeft: 8 }}
+                    >
+                        Cuenta Empresarial
+                    </NavLink>
                 </div>
             ) : (
                 <UserMenu />
