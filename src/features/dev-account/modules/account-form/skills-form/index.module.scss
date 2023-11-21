@@ -21,6 +21,7 @@
 
     .skill {
         position: relative;
+        text-transform: capitalize;
 
         &__action {
             background-color: transparent;
@@ -53,5 +54,36 @@
                 transform: translate(-50%, -110%);
             }
         }
+    }
+}
+
+.autocomplete-skills {
+    position: relative;
+}
+
+.skills-list {
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 110%;
+    left: 0;
+
+    background-color: fn.bg-color('white');
+    border: 1px solid fn.main-color('primary');
+    border-radius: 5px;
+    overflow: hidden;
+
+    p {
+        padding: 0.5rem;
+        text-transform: capitalize;
+
+        &:hover {
+            background-color: fn.bg-color('white-darkened');
+        }
+    }
+
+    span {
+        display: block;
+        padding: 0.5rem;
     }
 }

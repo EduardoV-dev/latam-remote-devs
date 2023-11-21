@@ -6,49 +6,51 @@ import React from 'react';
 import clsx from 'clsx';
 import RemoveIcon from '../../../assets/svg/remove.svg?react';
 import { FormType } from '..';
-
-export interface Skill {
-    name: string;
-    value: number;
-}
-
-const SKILLS: Skill[] = [
-    { name: 'React', value: 0 },
-    { name: 'Next.js', value: 1 },
-    { name: 'Remix.js', value: 2 },
-    { name: 'Jaja.js', value: 3 },
-    { name: 'Haha.js', value: 4 },
-];
+import { SkillDTO } from '@/features/dev-account/types/skill';
 
 interface Props {
     form: FormType;
-    onChange: (skills: number[]) => void;
+    onChange: (skills: SkillDTO[]) => void;
 }
 
 export const SkillsForm = ({ onChange, form }: Props): JSX.Element => {
-    const [selectedSkills, setSelectedSkills] = React.useState<number[]>(
+    const [selectedSkills, setSelectedSkills] = React.useState<SkillDTO[]>(
         form.getValues('skills') || [],
     );
 
-    const addToSkillSet = (skill: number): void => {
-        const newSkills = [...selectedSkills, skill];
+    const addToSkillSet = (skill: SkillDTO): void => {
+        const isDuplicated = selectedSkills.some((item) =>
+            skill.skillId
+                ? item.skillId === skill.skillId
+                : item.skillName?.toLowerCase() ===
+                      skill.skillName?.toLowerCase() || false,
+        );
+
+        const newSkills = isDuplicated
+            ? selectedSkills
+            : [...selectedSkills, skill];
+
+        const skillsWithOnlyTheNecessary = newSkills.map<SkillDTO>((skill) => ({
+            ...(skill.skillId && { skillId: skill.skillId }),
+            ...(skill.skillName &&
+                !skill.skillId && { skillName: skill.skillName }),
+        }));
+
         setSelectedSkills(newSkills);
-        onChange(newSkills);
+        onChange(skillsWithOnlyTheNecessary);
     };
 
-    const removeSkillFromSkillSet = (skill: number): void => {
+    const removeSkillFromSkillSet = (skillToRemove: SkillDTO): void => {
         const newSkills = selectedSkills.filter(
-            (skillValue) => skillValue !== skill,
+            (skill) =>
+                skill.skillId !== skillToRemove.skillId ||
+                skill.skillName !== skillToRemove.skillName,
         );
         setSelectedSkills(newSkills);
         onChange(newSkills);
     };
 
     // === Render
-
-    const skillsWithoutSelectedOnes = SKILLS.filter(
-        (skill) => !selectedSkills.includes(skill.value),
-    );
 
     form.register('skills', {
         validate: (skills) =>
@@ -58,10 +60,7 @@ export const SkillsForm = ({ onChange, form }: Props): JSX.Element => {
     return (
         <TwoColumnedSection title="Tecnologías">
             <div className={styles.container}>
-                <SkillSelector
-                    skillsOptions={skillsWithoutSelectedOnes}
-                    onAdd={addToSkillSet}
-                />
+                <SkillSelector onAdd={addToSkillSet} />
 
                 <section>
                     <FormControl
@@ -70,28 +69,27 @@ export const SkillsForm = ({ onChange, form }: Props): JSX.Element => {
                     >
                         {selectedSkills.length > 0 && (
                             <div className={clsx('group', styles['skills'])}>
-                                {selectedSkills.map((skillValue) => {
-                                    const skill = SKILLS.find(
-                                        (item) => item.value === skillValue,
-                                    );
+                                {selectedSkills.map((skill) => {
+                                    let key = '';
 
-                                    if (!skill) return <></>;
+                                    if (skill.skillId) key += skill.skillId;
+                                    else if (skill.skillName)
+                                        key += skill.skillName;
 
                                     return (
                                         <span
-                                            key={skill.name + skill.value}
+                                            key={key}
                                             className={clsx(
                                                 'skill-badge',
                                                 styles.skill,
                                             )}
                                         >
-                                            {skill.name}
-
+                                            {skill.skillName || 'No definido'}
                                             <button
                                                 className={styles.skill__action}
                                                 onClick={() =>
                                                     removeSkillFromSkillSet(
-                                                        skillValue,
+                                                        skill,
                                                     )
                                                 }
                                                 type="button"

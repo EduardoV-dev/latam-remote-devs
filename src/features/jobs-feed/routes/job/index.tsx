@@ -2,65 +2,80 @@ import LinkIcon from '@/assets/svg/link.svg?react';
 import styles from './index.module.scss';
 import { Button } from 'antd';
 import { JobsSearchInput } from '../../modules/jobs-search-input';
+import { useGetJobById } from '../../api/get-job-by-id';
+import { Link, useParams } from 'react-router-dom';
+import { APP_ROUTES } from '@/config/routes';
 
-export const Job = (): JSX.Element => (
-    <>
-        <JobsSearchInput />
+export const Job = (): JSX.Element => {
+    const { jobId } = useParams();
+    const { isLoading, data, error } = useGetJobById({
+        jobId: Number(jobId),
+        config: {
+            onError: (err) => {
+                console.log(err);
+            },
+        },
+    });
 
-        <section className={styles.container}>
-            <header className={styles.header}>
-                <section className={styles.data}>
-                    <p>Senior React Developer</p>
-                    <span>
-                        Nowoptics
-                        <LinkIcon />
-                    </span>
-                    <Button type="primary">Aplicar</Button>
-                </section>
+    if (isLoading || !data) return <p>Cargando...</p>;
 
-                <section>
-                    <p className={styles.headline}>Habilidades Requeridas</p>
+    console.log(data, error);
 
-                    <div className="group">
-                        {[...new Array(7)].map(() => (
-                            <span className="skill-badge">React</span>
-                        ))}
-                    </div>
-                </section>
-            </header>
+    return (
+        <>
+            <JobsSearchInput />
 
-            <hr className={styles.separator} />
+            <section className={styles.container}>
+                <header className={styles.header}>
+                    <section className={styles.data}>
+                        <p>{data.title}</p>
 
-            <article>
-                <p className={styles.headline}>Detalles de la Oferta</p>
+                        <div className={styles.group}>
+                            <Link
+                                to={APP_ROUTES.PUBLIC.COMPANY_DETAILS.replace(
+                                    ':id',
+                                    data.companyId.toString(),
+                                )}
+                            >
+                                {data.companyId}
+                                <LinkIcon />
+                            </Link>
 
-                {[...new Array(3)].map(() => (
-                    <p>
-                        At quis risus sed vulputate odio ut enim blandit
-                        volutpat. Nullam eget felis eget nunc lobortis mattis.
-                        Donec massa sapien faucibus et molestie. Sit amet
-                        volutpat consequat mauris nunc. Tortor dignissim
-                        convallis aenean et tortor at risus. Lacus suspendisse
-                        faucibus interdum posuere. Massa tincidunt nunc pulvinar
-                        sapien et ligula. Risus nec feugiat in fermentum posuere
-                        urna nec tincidunt praesent. Nascetur ridiculus mus
-                        mauris vitae ultricies leo. Augue neque gravida in
-                        fermentum et sollicitudin ac orci phasellus. Tristique
-                        sollicitudin nibh sit amet. Volutpat odio facilisis
-                        mauris sit. Velit aliquet sagittis id consectetur purus
-                        ut faucibus pulvinar. Amet nisl purus in mollis nunc
-                        sed. Pretium aenean pharetra magna ac placerat
-                        vestibulum lectus mauris ultrices. Sed euismod nisi
-                        porta lorem mollis aliquam ut porttitor leo. Semper eget
-                        duis at tellus at urna condimentum. Mi proin sed libero
-                        enim sed faucibus turpis in. Urna nunc id cursus metus
-                        aliquam eleifend mi in nulla. Augue neque gravida in
-                        fermentum.
-                    </p>
-                ))}
-            </article>
-        </section>
-    </>
-);
+                            <span className={styles.salary}>
+                                U$ {data.minSalary} - U$ {data.maxSalary}
+                            </span>
+                        </div>
+
+                        <Button type="primary">Aplicar</Button>
+                    </section>
+
+                    <section>
+                        <p className={styles.headline}>
+                            Habilidades Requeridas
+                        </p>
+
+                        <div className="group">
+                            {data.JobOfferSkill.map((skill) => (
+                                <span className="skill-badge" key={skill.id}>
+                                    {skill.skill.name}
+                                </span>
+                            ))}
+                        </div>
+                    </section>
+                </header>
+
+                <hr className={styles.separator} />
+
+                <article>
+                    <p className={styles.headline}>Detalles de la Oferta</p>
+
+                    <div
+                        dangerouslySetInnerHTML={{ __html: data.description }}
+                    />
+                </article>
+            </section>
+        </>
+    );
+};
 
 Job.displayName = 'Job';

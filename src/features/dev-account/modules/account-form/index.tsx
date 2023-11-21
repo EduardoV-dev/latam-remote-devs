@@ -11,6 +11,7 @@ import { ExperienceDAO } from '../../types/experience';
 import { EducationDAO } from '../../types/education';
 import { Auth } from '@/lib/auth';
 import { useAccountHandling } from '../../api/create-account';
+import { SkillDTO } from '../../types/skill';
 
 export interface UserAccount {
     basic: {
@@ -30,7 +31,7 @@ export interface UserAccount {
         github: string;
         linkedin: string;
     };
-    skills: number[];
+    skills: SkillDTO[];
     experience: ExperienceDAO[];
     education: EducationDAO[];
 }
@@ -67,15 +68,27 @@ export const AccountForm = ({
     const onSubmit: SubmitHandler<UserAccount> = (data) => {
         if (isLoading) return;
 
+        console.log(data.skills);
+        // console.log(
+        //     data.skills.map((skill) => ({
+        //         ...(skill.skillId && { skillId: skill.skillId }),
+        //         ...(skill.skillName &&
+        //             !skill.existedBefore && { skillName: skill.skillName }),
+        //     })),
+        // );
+
         mutate({
             account: {
                 about: data.profile.about,
                 address: data.basic.address,
                 city: data.basic.city,
                 country: data.basic.country,
-                DeveloperSkill: data.skills.map((skill) => ({
-                    skillId: skill,
-                })),
+                DeveloperSkill: data.skills,
+                // DeveloperSkill: data.skills.map((skill) => ({
+                //     ...(skill.skillId && { skillId: skill.skillId }),
+                //     ...(skill.skillName &&
+                //         !skill.existedBefore && { skillName: skill.skillName }),
+                // })),
                 Education:
                     data.education?.map((education) => ({
                         description: education.description,

@@ -10,8 +10,8 @@ export const APP_ROUTES = {
                 BASE: '/dev/account',
                 NEW: '/dev/account/new',
                 EDIT: '/dev/account/information',
+                JOBS: '/dev/account/jobs',
             },
-            JOBS: '/dev/jobs',
         },
     },
 };

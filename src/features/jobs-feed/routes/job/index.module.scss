@@ -31,11 +31,25 @@
         display: grid;
         gap: 0.8rem;
 
-        p {
-            font-size: 18px;
-            font-weight: 600;
+        .group {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
 
-            margin-bottom: -2rem;
+            a {
+                font-size: 18px;
+                font-weight: 600;
+
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .salary {
+                background-color: rgba(fn.main-color('primary'), 0.4);
+                border-radius: 5px;
+                padding: 0.2rem 1rem;
+            }
         }
 
         span {

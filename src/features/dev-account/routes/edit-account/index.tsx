@@ -3,10 +3,16 @@ import { Auth } from '@/lib/auth';
 import { useGetAccount } from '../../api/get-account';
 import { AccountForm } from '../../modules/account-form';
 import { useFormEditStore } from '../../stores/form-edit';
+import { APP_ROUTES } from '@/config/routes';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 export const EditAccount = (): JSX.Element => {
+    const navigate = useNavigate();
     const { isLoading, data } = useGetAccount();
     const setIsEditing = useFormEditStore((state) => state.setIsEditing);
+
+    console.log(Auth.getAuth()?.user.developer);
 
     React.useEffect(() => {
         setIsEditing(true);
@@ -16,6 +22,8 @@ export const EditAccount = (): JSX.Element => {
 
     const onSuccess = (): void => {
         setIsEditing(false);
+        navigate(APP_ROUTES.PRIVATE.DEV.ACCOUNT.BASE);
+        toast.success('El Perfil Ha Sido Actualizado');
     };
 
     return (
@@ -54,7 +62,10 @@ export const EditAccount = (): JSX.Element => {
                     profesionalTitle: data.title,
                     website: data.website,
                 },
-                skills: data.DeveloperSkill.map((skill) => skill.skill.id),
+                skills: data.DeveloperSkill.map(({ skill }) => ({
+                    skillId: skill.id,
+                    skillName: skill.name,
+                })),
             }}
         />
     );

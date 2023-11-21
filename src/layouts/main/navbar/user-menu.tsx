@@ -49,7 +49,7 @@ export const UserMenu = (): JSX.Element => {
                             Perfil
                         </Link>
 
-                        <Link to={APP_ROUTES.PRIVATE.DEV.JOBS}>
+                        <Link to={APP_ROUTES.PRIVATE.DEV.ACCOUNT.JOBS}>
                             <JobsIcon />
                             Trabajos
                         </Link>

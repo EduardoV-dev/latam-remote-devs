@@ -52,9 +52,9 @@ export const ProfileBasedForm = ({ form }: Props): JSX.Element => {
                 <LimitedTextArea
                     maxCharacters={250}
                     onChange={(value) => form.setValue('profile.about', value)}
-                    initialValue={
-                        isEditing ? form.getValues('profile.about') : ''
-                    }
+                    {...(isEditing && {
+                        initialValue: form.getValues('profile.about'),
+                    })}
                 />
             </FormControl>
 
