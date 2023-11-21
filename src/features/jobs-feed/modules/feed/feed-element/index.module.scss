@@ -34,8 +34,18 @@
 
         .data {
             a {
-                font-weight: 600;
-                font-size: 18px;
+                &:first-of-type {
+                    font-weight: 600;
+                    font-size: 18px;
+                }
+
+                &:last-of-type {
+                    margin-top: 1rem;
+
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                }
             }
 
             span {

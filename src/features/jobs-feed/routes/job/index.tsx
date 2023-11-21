@@ -1,14 +1,15 @@
 import LinkIcon from '@/assets/svg/link.svg?react';
 import styles from './index.module.scss';
-import { Button } from 'antd';
 import { JobsSearchInput } from '../../modules/jobs-search-input';
 import { useGetJobById } from '../../api/get-job-by-id';
 import { Link, useParams } from 'react-router-dom';
 import { APP_ROUTES } from '@/config/routes';
+import { formatNumber } from '@/utils/number-format';
+import { ApplyToJobCTA } from '../../modules/apply-to-job-cta';
 
 export const Job = (): JSX.Element => {
     const { jobId } = useParams();
-    const { isLoading, data, error } = useGetJobById({
+    const { isLoading, data } = useGetJobById({
         jobId: Number(jobId),
         config: {
             onError: (err) => {
@@ -17,63 +18,70 @@ export const Job = (): JSX.Element => {
         },
     });
 
-    if (isLoading || !data) return <p>Cargando...</p>;
-
-    console.log(data, error);
-
     return (
         <>
             <JobsSearchInput />
 
-            <section className={styles.container}>
-                <header className={styles.header}>
-                    <section className={styles.data}>
-                        <p>{data.title}</p>
+            {data === null && <p>El trabajo no existe</p>}
+            {isLoading || (!data && <p>Cargando...</p>)}
 
-                        <div className={styles.group}>
-                            <Link
-                                to={APP_ROUTES.PUBLIC.COMPANY_DETAILS.replace(
-                                    ':id',
-                                    data.companyId.toString(),
-                                )}
-                            >
-                                {data.companyId}
-                                <LinkIcon />
-                            </Link>
+            {!isLoading && data && (
+                <section className={styles.container}>
+                    <header className={styles.header}>
+                        <section className={styles.data}>
+                            <p>{data.title}</p>
 
-                            <span className={styles.salary}>
-                                U$ {data.minSalary} - U$ {data.maxSalary}
-                            </span>
-                        </div>
+                            <div className={styles.group}>
+                                <Link
+                                    to={APP_ROUTES.PUBLIC.COMPANY_DETAILS.replace(
+                                        ':id',
+                                        data.company.id.toString(),
+                                    )}
+                                >
+                                    {data.company.name}
+                                    <LinkIcon />
+                                </Link>
 
-                        <Button type="primary">Aplicar</Button>
-                    </section>
-
-                    <section>
-                        <p className={styles.headline}>
-                            Habilidades Requeridas
-                        </p>
-
-                        <div className="group">
-                            {data.JobOfferSkill.map((skill) => (
-                                <span className="skill-badge" key={skill.id}>
-                                    {skill.skill.name}
+                                <span className={styles.salary}>
+                                    U$ {formatNumber(data.minSalary)} - U${' '}
+                                    {formatNumber(data.maxSalary)}
                                 </span>
-                            ))}
-                        </div>
-                    </section>
-                </header>
+                            </div>
 
-                <hr className={styles.separator} />
+                            <ApplyToJobCTA jobOfferId={data.id} />
+                        </section>
 
-                <article>
-                    <p className={styles.headline}>Detalles de la Oferta</p>
+                        <section>
+                            <p className={styles.headline}>
+                                Habilidades Requeridas
+                            </p>
 
-                    <div
-                        dangerouslySetInnerHTML={{ __html: data.description }}
-                    />
-                </article>
-            </section>
+                            <div className="group">
+                                {data.JobOfferSkill.map((skill) => (
+                                    <span
+                                        className="skill-badge"
+                                        key={skill.id}
+                                    >
+                                        {skill.skill.name}
+                                    </span>
+                                ))}
+                            </div>
+                        </section>
+                    </header>
+
+                    <hr className={styles.separator} />
+
+                    <article>
+                        <p className={styles.headline}>Detalles de la Oferta</p>
+
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: data.description,
+                            }}
+                        />
+                    </article>
+                </section>
+            )}
         </>
     );
 };

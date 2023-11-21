@@ -12,8 +12,6 @@ export const EditAccount = (): JSX.Element => {
     const { isLoading, data } = useGetAccount();
     const setIsEditing = useFormEditStore((state) => state.setIsEditing);
 
-    console.log(Auth.getAuth()?.user.developer);
-
     React.useEffect(() => {
         setIsEditing(true);
     }, [setIsEditing]);

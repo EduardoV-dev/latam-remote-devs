@@ -66,7 +66,10 @@ export class Auth {
             user: {
                 ...cookieData.user,
                 photoUrl: developer.picture,
-                developer: { ...developer },
+                developer: {
+                    ...developer,
+                    Postulation: cookieData.user.developer?.Postulation || [],
+                },
             },
         };
         setCookie(TOKEN_KEY, JSON.stringify(newData), {
@@ -75,5 +78,42 @@ export class Auth {
             secure: import.meta.env.PROD,
             sameSite: 'Strict',
         });
+    };
+
+    public static updatePostulations = (jobOfferId: number) => {
+        const cookie = getCookie(TOKEN_KEY);
+        if (!cookie) return;
+        const cookieData: UserDeveloperResponse = JSON.parse(cookie);
+
+        const Postulation: { jobOfferId: number }[] = [
+            ...(cookieData.user.developer?.Postulation || []),
+            { jobOfferId },
+        ];
+
+        const newData: UserDeveloperResponse = {
+            ...cookieData,
+            user: {
+                ...cookieData.user,
+                developer: {
+                    ...cookieData.user.developer!,
+                    Postulation,
+                },
+            },
+        };
+        setCookie(TOKEN_KEY, JSON.stringify(newData), {
+            path: '/',
+            expires: 1,
+            secure: import.meta.env.PROD,
+            sameSite: 'Strict',
+        });
+    };
+
+    public static shouldPostulate = (jobOfferId: number): boolean => {
+        const auth = this.getAuth();
+        if (!auth) return true;
+        const postulations = auth.user.developer?.Postulation || [];
+        return !postulations
+            .map(({ jobOfferId }) => jobOfferId)
+            .includes(jobOfferId);
     };
 }

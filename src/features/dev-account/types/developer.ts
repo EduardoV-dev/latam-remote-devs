@@ -1,21 +1,5 @@
 import { SkillDTO, SkillResponse } from './skill';
 
-export interface DeveloperLogin {
-    about: string;
-    address: string;
-    city: string;
-    country: string;
-    cvUrl: string;
-    email: string;
-    firstName: string;
-    github: string;
-    id: number;
-    lastName: string;
-    linkedin: string;
-    telephone: string;
-    title: string;
-    website: string;
-}
 export interface DeveloperAccountDTO {
     firstName: string;
     lastName: string;
@@ -52,6 +36,14 @@ export interface DeveloperAccountDAO
     id: number;
     cvUrl: string;
     DeveloperSkill: SkillResponse[];
+}
+
+export interface DeveloperLogin
+    extends Omit<DeveloperAccountDTO, 'DeveloperSkill'> {
+    id: number;
+    cvUrl: string;
+    DeveloperSkill: SkillResponse[];
+    Postulation: { jobOfferId: number }[];
 }
 
 export interface DeveloperMedia {

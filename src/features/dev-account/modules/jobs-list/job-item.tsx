@@ -1,62 +1,56 @@
 import { APP_ROUTES } from '@/config/routes';
 import { Link } from 'react-router-dom';
 import LinkIcon from '@/assets/svg/link.svg?react';
-import { Button } from 'antd';
 import styles from './index.module.scss';
-import React from 'react';
+import { Postulation } from '../../types/postulation';
 
-export const JobItem = (): JSX.Element => {
-    const [isEditingState, setIsEditingState] = React.useState<boolean>(false);
-    const [state, setState] = React.useState<string>('En proceso');
+const JOB_STATE = {
+    Opened: 'Abierta',
+    Closed: 'Cerrada',
+};
 
-    const onStateChange = (event: React.ChangeEvent<HTMLSelectElement>) =>
-        setState(event.target.value);
+const OFFER_STATE = {
+    Pending: 'En proceso',
+    Rejected: 'Rechazado',
+    Accepted: 'Contratado',
+};
 
-    const openStateChange = (): void => setIsEditingState(true);
-
-    const changeState = (): void => {
-        // ...
-        setIsEditingState(false);
-    };
-
+export const JobItem = ({
+    postulation,
+}: {
+    postulation: Postulation;
+}): JSX.Element => {
     return (
         <div className={styles.job}>
             <p className={styles['job-title']}>
-                Senior React Developer <small>Aplicado en 11/02/2023</small>
+                {postulation.jobOffer.title}{' '}
+                <small>Aplicado en 11/02/2023</small>
             </p>
 
             <p className={styles['job-company']}>
                 <Link
-                    to={APP_ROUTES.PUBLIC.COMPANY_DETAILS.replace(':id', '1')}
+                    to={APP_ROUTES.PUBLIC.COMPANY_DETAILS.replace(
+                        ':id',
+                        postulation.jobOffer.company.id.toString(),
+                    )}
                 >
-                    Nowoptics
+                    {postulation.jobOffer.company.name}
                     <LinkIcon />
                 </Link>
 
-                <span>Cerrado</span>
+                <span>
+                    {JOB_STATE[
+                        postulation.jobOffer.state as keyof typeof JOB_STATE
+                    ] || postulation.jobOffer.state}
+                </span>
             </p>
 
             <div className={styles['job-actions']}>
-                {isEditingState ? (
-                    <select onChange={onStateChange} value={state}>
-                        <option value="" hidden>
-                            Seleccionar estado
-                        </option>
-                        <option value="En proceso">En proceso</option>
-                        <option value="Contratado">Contratado</option>
-                        <option value="Rechazado">Rechazado</option>
-                        <option value="No interesado">No interesado</option>
-                    </select>
-                ) : (
-                    <span>{state}</span>
-                )}
-
-                <Button
-                    type="primary"
-                    onClick={isEditingState ? changeState : openStateChange}
-                >
-                    {isEditingState ? 'Aceptar Estado' : 'Cambiar Estado'}
-                </Button>
+                <span>
+                    {OFFER_STATE[
+                        postulation.state as keyof typeof OFFER_STATE
+                    ] || postulation.state}
+                </span>
             </div>
         </div>
     );

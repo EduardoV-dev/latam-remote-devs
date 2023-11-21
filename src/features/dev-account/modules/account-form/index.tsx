@@ -68,15 +68,6 @@ export const AccountForm = ({
     const onSubmit: SubmitHandler<UserAccount> = (data) => {
         if (isLoading) return;
 
-        console.log(data.skills);
-        // console.log(
-        //     data.skills.map((skill) => ({
-        //         ...(skill.skillId && { skillId: skill.skillId }),
-        //         ...(skill.skillName &&
-        //             !skill.existedBefore && { skillName: skill.skillName }),
-        //     })),
-        // );
-
         mutate({
             account: {
                 about: data.profile.about,

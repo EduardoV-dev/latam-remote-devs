@@ -4,11 +4,15 @@ import CloseIcon from '@/assets/svg/close.svg?react';
 import LinkIcon from '@/assets/svg/link.svg?react';
 import styles from './index.module.scss';
 import { Link } from 'react-router-dom';
+import { APP_ROUTES } from '@/config/routes';
+import { ApplyToJobCTA } from '../../apply-to-job-cta';
 
 export const FeedElement = (): JSX.Element => {
-    const { jobId, setJobId } = useFeedStore();
-    if (!jobId) return <></>;
-    const hideFeedElement = (): void => setJobId(null);
+    const { job, setJob } = useFeedStore();
+
+    if (!job) return <></>;
+
+    const hideFeedElement = (): void => setJob(null);
 
     return (
         <section className={styles.container}>
@@ -23,45 +27,40 @@ export const FeedElement = (): JSX.Element => {
 
                 <div className={styles.group}>
                     <div className={styles.data}>
-                        <Link to={jobId}>Senior React Developer</Link>
+                        <Link to={job.id.toString()}>{job.title}</Link>
 
-                        <span>
-                            Nowoptics <LinkIcon />
-                        </span>
+                        <Link
+                            to={APP_ROUTES.PUBLIC.COMPANY_DETAILS.replace(
+                                ':id',
+                                job.company.id.toString(),
+                            )}
+                        >
+                            {job.company.name} <LinkIcon />
+                        </Link>
                     </div>
 
-                    <Button type="primary">Aplicar</Button>
+                    <ApplyToJobCTA jobOfferId={job.id} />
                 </div>
             </header>
             <div className={styles.body}>
                 <p className={styles.headline}>Habilidades Requeridas</p>
 
                 <div className="group">
-                    <span className="skill-badge">React</span>
-                    <span className="skill-badge">React</span>
-                    <span className="skill-badge">React</span>
-                    <span className="skill-badge">React</span>
-                    <span className="skill-badge">React</span>
-                    <span className="skill-badge">React</span>
-                    <span className="skill-badge">React</span>
-                    <span className="skill-badge">React</span>
+                    {job.JobOfferSkill.map(({ skill }) => (
+                        <span
+                            key={skill.id + skill.name}
+                            className="skill-badge"
+                        >
+                            {skill.name}
+                        </span>
+                    ))}
                 </div>
 
                 <p className={styles.headline}>Detalles de la Oferta</p>
 
-                <article>
-                    {[...new Array(15)].map(() => (
-                        <p>
-                            sed. Pretium aenean pharetra magna ac placerat
-                            vestibulum lectus mauris ultrices. Sed euismod nisi
-                            porta lorem mollis aliquam ut porttitor leo. Semper
-                            eget duis at tellus at urna condimentum. Mi proin
-                            sed libero enim sed faucibus turpis in. Urna nunc id
-                            cursus metus aliquam eleifend mi in nulla. Augue
-                            neque gravida in fermentum.
-                        </p>
-                    ))}
-                </article>
+                <article
+                    dangerouslySetInnerHTML={{ __html: job.description }}
+                />
             </div>
         </section>
     );

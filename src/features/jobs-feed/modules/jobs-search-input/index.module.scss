@@ -4,6 +4,18 @@
     width: min(100%, 500px);
     margin-inline: auto;
 
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    &.large {
+        width: min(100%, 700px);
+    }
+}
+
+.form {
+    flex: 1;
+
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 1rem;
@@ -29,5 +41,18 @@
             padding-block: 0;
             background-color: transparent;
         }
+    }
+}
+
+.checkbox {
+    flex-basis: 200px;
+
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+
+    & > input[type='checkbox'] {
+        width: fit-content;
+        margin-top: 0.2rem;
     }
 }

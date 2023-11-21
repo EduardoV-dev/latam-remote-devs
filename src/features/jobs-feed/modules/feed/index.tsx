@@ -6,17 +6,22 @@ import styles from './index.module.scss';
 
 export const Feed = (): JSX.Element => {
     const search = useFeedStore((state) => state.search);
+    const results = useFeedStore((state) => state.results);
+    const filterBySkills = useFeedStore((state) => state.filterBySkills);
+
+    const getFeedMessage = (): string => {
+        if (filterBySkills) return 'Resultados basados en el perfil';
+        if (search !== '') return `Trabajos de ${search}`;
+        return 'Resultados más recientes';
+    };
 
     return (
         <section className={styles.container}>
             <div>
                 <header className={styles['jobs-header']}>
-                    <p>
-                        {search === ''
-                            ? 'Resultados basados en el perfil'
-                            : `Trabajos de ${search}`}
-                    </p>
-                    <span>7,652 resultados</span>
+                    <p>{getFeedMessage()}</p>
+                    {results ? <span>{results} resultados</span> : ''}
+                    {results === 0 ? <span>Sin resultados</span> : ''}
                 </header>
 
                 <FeedList />

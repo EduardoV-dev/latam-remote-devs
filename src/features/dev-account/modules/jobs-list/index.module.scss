@@ -10,6 +10,15 @@
     gap: 1.5rem;
 }
 
+.title {
+    font-size: 28px;
+    font-weight: 600;
+
+    span {
+        color: fn.main-color('primary');
+    }
+}
+
 .job {
     border-radius: 10px;
     border: 1px solid fn.main-color('primary');
