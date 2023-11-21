@@ -31,6 +31,11 @@
         display: grid;
         gap: 0.8rem;
 
+        .title {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
         .group {
             display: flex;
             align-items: center;

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import LinkIcon from '@/assets/svg/link.svg?react';
 import styles from './index.module.scss';
 import { Postulation } from '../../types/postulation';
+import { formatDate } from '../../utils/date-format';
 
 const JOB_STATE = {
     Opened: 'Abierta',
@@ -22,10 +23,15 @@ export const JobItem = ({
 }): JSX.Element => {
     return (
         <div className={styles.job}>
-            <p className={styles['job-title']}>
+            <Link
+                to={`${APP_ROUTES.PUBLIC.JOBS}/${postulation.jobOffer.id}`}
+                className={styles['job-title']}
+            >
                 {postulation.jobOffer.title}{' '}
-                <small>Aplicado en 11/02/2023</small>
-            </p>
+                <small>
+                    Aplicado en {formatDate(postulation.postulationDate)}
+                </small>
+            </Link>
 
             <p className={styles['job-company']}>
                 <Link

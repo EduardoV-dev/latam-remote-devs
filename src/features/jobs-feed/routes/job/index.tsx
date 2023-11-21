@@ -29,7 +29,7 @@ export const Job = (): JSX.Element => {
                 <section className={styles.container}>
                     <header className={styles.header}>
                         <section className={styles.data}>
-                            <p>{data.title}</p>
+                            <p className={styles.title}>{data.title}</p>
 
                             <div className={styles.group}>
                                 <Link

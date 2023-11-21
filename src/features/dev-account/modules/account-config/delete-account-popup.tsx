@@ -4,8 +4,29 @@ import styles from './index.module.scss';
 import CloseIcon from '@/assets/svg/close.svg?react';
 import clsx from 'clsx';
 import { Auth } from '@/lib/auth';
+import { useDeleteAccount } from '../../api/delete-account';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { APP_ROUTES } from '@/config/routes';
+import { useAuthUserStore } from '@/features/auth/stores/auth-user';
 
 export const DeleteAccountPopup = (): JSX.Element => {
+    const navigate = useNavigate();
+    const setIsLoggedIn = useAuthUserStore((state) => state.setIsLoggedIn);
+
+    const { mutate, isLoading } = useDeleteAccount({
+        onSuccess: () => {
+            toast.success('Tu cuenta ha sido eliminada');
+            Auth.logout();
+            navigate(APP_ROUTES.PUBLIC.JOBS);
+            setIsLoggedIn(false);
+            setOpen(false);
+        },
+        onError: (err) => {
+            console.error(err as any);
+            toast.error('Hubo un error al intentar eliminar la cuenta');
+        },
+    });
     const [open, setOpen] = React.useState<boolean>(false);
     const [keyword, setKeyword] = React.useState<string>('');
 
@@ -13,10 +34,15 @@ export const DeleteAccountPopup = (): JSX.Element => {
         event: React.ChangeEvent<HTMLInputElement>,
     ): void => setKeyword(event.target.value);
 
-    const onAccountDeletion = (): void => {
-        console.log('account deleted');
+    const onClose = (): void => {
         setOpen(false);
+        setKeyword('');
     };
+
+    const shouldDeleteAccount =
+        keyword !== Auth.getAuth()?.user.email || isLoading;
+
+    const onAccountDeletion = () => !shouldDeleteAccount && mutate(undefined);
 
     return (
         <>
@@ -31,7 +57,7 @@ export const DeleteAccountPopup = (): JSX.Element => {
                     <button
                         className={styles.close}
                         type="button"
-                        onClick={() => setOpen(false)}
+                        onClick={onClose}
                     >
                         <CloseIcon />
                     </button>
@@ -51,14 +77,17 @@ export const DeleteAccountPopup = (): JSX.Element => {
                     />
 
                     <div className={styles.group}>
-                        <Button type="primary" onClick={() => setOpen(false)}>
+                        <Button type="primary" onClick={onClose}>
                             Cancelar
                         </Button>
 
                         <Button
                             type="primary"
                             danger
-                            disabled={keyword !== Auth.getAuth()?.user.email}
+                            disabled={
+                                keyword !== Auth.getAuth()?.user.email ||
+                                isLoading
+                            }
                             onClick={onAccountDeletion}
                         >
                             Eliminar
