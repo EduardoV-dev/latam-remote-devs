@@ -3,6 +3,10 @@ import { Button } from 'antd';
 import styles from './index.module.scss';
 import { ChangePasswordLayout } from '../../components/change-password-layout';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useChangePassword } from '../../api/change-password';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { APP_ROUTES } from '@/config/routes';
 
 interface ChangePasswordState {
     currentPassword: string;
@@ -11,12 +15,27 @@ interface ChangePasswordState {
 }
 
 export const ChangePassword = (): JSX.Element => {
+    const navigate = useNavigate();
+    const { mutate, isLoading } = useChangePassword({
+        onSuccess: () => {
+            toast.success('La Contraseña ha sido cambiada');
+            navigate(APP_ROUTES.PRIVATE.DEV.ACCOUNT.BASE);
+        },
+        onError: (err) => {
+            console.error(err);
+        },
+    });
+
     const form = useForm<ChangePasswordState>();
 
     const { errors } = form.formState;
 
     const onSubmit: SubmitHandler<ChangePasswordState> = (data) =>
-        console.log(data);
+        !isLoading &&
+        mutate({
+            newPassword: data.newPassword,
+            oldPassword: data.currentPassword,
+        });
 
     return (
         <ChangePasswordLayout>
@@ -83,7 +102,7 @@ export const ChangePassword = (): JSX.Element => {
                     className={styles.submit}
                     type="primary"
                     htmlType="submit"
-                    // disabled={isLoading}
+                    disabled={isLoading}
                 >
                     Cambiar Contraseña
                 </Button>
