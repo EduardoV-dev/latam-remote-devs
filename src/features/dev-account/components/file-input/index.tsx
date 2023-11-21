@@ -45,7 +45,7 @@ export const FileInput = ({
                 </div>
             )}
 
-            {initialValue && (
+            {!file && initialValue && (
                 <a
                     className={styles.preview}
                     href={initialValue}

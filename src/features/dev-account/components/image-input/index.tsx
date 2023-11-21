@@ -25,9 +25,11 @@ export const ImageInput = ({
     onChange: changeEvent,
     initialValue,
 }: Props): JSX.Element => {
-    const [state, setState] = React.useState<ImageState>({
-        preview: initialValue,
-    });
+    const [state, setState] = React.useState<ImageState>({});
+
+    React.useEffect(() => {
+        setState({ preview: initialValue });
+    }, [initialValue]);
 
     const onChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];

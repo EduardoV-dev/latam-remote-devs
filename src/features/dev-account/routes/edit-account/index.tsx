@@ -1,6 +1,5 @@
 import React from 'react';
 import { Auth } from '@/lib/auth';
-import { useGetAccount } from '../../api/get-account';
 import { AccountForm } from '../../modules/account-form';
 import { useFormEditStore } from '../../stores/form-edit';
 import { APP_ROUTES } from '@/config/routes';
@@ -9,14 +8,11 @@ import { useNavigate } from 'react-router-dom';
 
 export const EditAccount = (): JSX.Element => {
     const navigate = useNavigate();
-    const { isLoading, data } = useGetAccount();
     const setIsEditing = useFormEditStore((state) => state.setIsEditing);
 
     React.useEffect(() => {
         setIsEditing(true);
     }, [setIsEditing]);
-
-    if (isLoading || !data) return <>Cargando...</>;
 
     const onSuccess = (): void => {
         setIsEditing(false);
@@ -24,27 +20,32 @@ export const EditAccount = (): JSX.Element => {
         toast.success('El Perfil Ha Sido Actualizado');
     };
 
+    const user = Auth.getAuth()?.user;
+    const developer = user?.developer;
+
+    if (!user || !developer) return <></>;
+
     return (
         <AccountForm
             {...{ onSuccess }}
             initialValues={{
                 basic: {
-                    address: data.address,
-                    city: data.city,
-                    country: data.country,
-                    lastname: data.lastName,
-                    name: data.firstName,
-                    profilePicture: Auth.getAuth()?.user.photoUrl || '',
-                    telephone: data.telephone,
+                    address: developer.address,
+                    city: developer.city,
+                    country: developer.country,
+                    lastname: developer.lastName,
+                    name: developer.firstName,
+                    profilePicture: user.photoUrl || '',
+                    telephone: developer.telephone,
                 },
-                education: data.Education.map((ed) => ({
+                education: developer.Education.map((ed) => ({
                     description: ed.description,
                     endDate: ed.endDate,
                     institute: ed.institution,
                     startDate: ed.startDate,
                     title: ed.title,
                 })),
-                experience: data.JobExperience.map((exp) => ({
+                experience: developer.JobExperience.map((exp) => ({
                     company: exp.companyName,
                     description: exp.description,
                     endDate: exp.endDate,
@@ -53,14 +54,14 @@ export const EditAccount = (): JSX.Element => {
                     title: exp.position,
                 })),
                 profile: {
-                    about: data.about,
-                    cv: data.cvUrl,
-                    github: data.github,
-                    linkedin: data.linkedin,
-                    profesionalTitle: data.title,
-                    website: data.website,
+                    about: developer.about,
+                    cv: developer.cvUrl,
+                    github: developer.github,
+                    linkedin: developer.linkedin,
+                    profesionalTitle: developer.title,
+                    website: developer.website,
                 },
-                skills: data.DeveloperSkill.map(({ skill }) => ({
+                skills: developer.DeveloperSkill.map(({ skill }) => ({
                     skillId: skill.id,
                     skillName: skill.name,
                 })),

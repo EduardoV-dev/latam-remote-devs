@@ -13,7 +13,11 @@ export const LimitedTextArea = ({
     onChange,
     initialValue,
 }: Props): JSX.Element => {
-    const [value, setValue] = React.useState<string>(initialValue ?? '');
+    const [value, setValue] = React.useState<string>('');
+
+    React.useEffect(() => {
+        if (initialValue) setValue(initialValue);
+    }, [initialValue]);
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const newInput: string = event.target.value;

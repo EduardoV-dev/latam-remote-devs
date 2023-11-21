@@ -72,6 +72,7 @@ export class Auth {
                 },
             },
         };
+        console.log('new info', newData);
         setCookie(TOKEN_KEY, JSON.stringify(newData), {
             path: '/',
             expires: 1,
