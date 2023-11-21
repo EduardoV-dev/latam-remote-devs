@@ -7,9 +7,7 @@ export const COUNTRIES = [
     'Cuba',
     'Ecuador',
     'El Salvador',
-    'España',
     'Guatemala',
-    'Guinea Ecuatorial',
     'Honduras',
     'México',
     'Nicaragua',
@@ -19,5 +17,5 @@ export const COUNTRIES = [
     'República Dominicana',
     'Uruguay',
     'Venezuela',
-    'No Hispanohablante',
+    'Fuera de Latinoamérica',
 ];

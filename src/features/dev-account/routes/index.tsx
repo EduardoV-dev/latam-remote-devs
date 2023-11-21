@@ -4,6 +4,7 @@ import { NewAccount } from './new-account';
 import { ProfilePage } from './profile';
 import { EditAccount } from './edit-account';
 import { JobApplications } from './job-applications';
+import { ChangePassword } from './change-password';
 
 export const DevAccountRoutes = (): JSX.Element => {
     return (
@@ -13,6 +14,7 @@ export const DevAccountRoutes = (): JSX.Element => {
                 <Route path="new" element={<NewAccount />} />
                 <Route path="information" element={<EditAccount />} />
                 <Route path="jobs" element={<JobApplications />} />
+                <Route path="change-password" element={<ChangePassword />} />
             </Routes>
         </MainLayout>
     );

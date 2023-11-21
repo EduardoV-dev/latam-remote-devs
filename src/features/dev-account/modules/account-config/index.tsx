@@ -4,6 +4,7 @@ import { Auth } from '@/lib/auth';
 import { useAuthUserStore } from '@/features/auth/stores/auth-user';
 import { APP_ROUTES } from '@/config/routes';
 import { useNavigate } from 'react-router-dom';
+import { DeleteAccountPopup } from './delete-account-popup';
 
 export const AccountConfig = (): JSX.Element => {
     const navigate = useNavigate();
@@ -28,7 +29,16 @@ export const AccountConfig = (): JSX.Element => {
                         <span>******</span>
                     </div>
 
-                    <Button type="primary">Cambiar Contraseña</Button>
+                    <Button
+                        type="primary"
+                        onClick={() =>
+                            navigate(
+                                APP_ROUTES.PRIVATE.DEV.ACCOUNT.CHANGE_PASSWORD,
+                            )
+                        }
+                    >
+                        Cambiar Contraseña
+                    </Button>
                 </div>
 
                 <div className={styles.item}>
@@ -42,9 +52,7 @@ export const AccountConfig = (): JSX.Element => {
                 <div className={styles.item}>
                     <p>Eliminar Cuenta</p>
 
-                    <Button type="primary" danger>
-                        Eliminar
-                    </Button>
+                    <DeleteAccountPopup />
                 </div>
             </section>
         </>

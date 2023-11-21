@@ -55,6 +55,7 @@
     .popup-menu {
         overflow: hidden;
         position: absolute;
+        z-index: 1;
         top: 70px;
         right: 0;
         line-height: 3.5;

@@ -11,6 +11,7 @@ export const APP_ROUTES = {
                 NEW: '/dev/account/new',
                 EDIT: '/dev/account/information',
                 JOBS: '/dev/account/jobs',
+                CHANGE_PASSWORD: '/dev/account/change-password',
             },
         },
     },
